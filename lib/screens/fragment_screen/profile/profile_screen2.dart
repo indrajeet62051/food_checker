@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:food_checker/core/Constrants/color.dart';
@@ -8,6 +10,7 @@ import 'package:food_checker/screens/widget/row.dart';
 import 'Sub_Profile_Screens/Language.dart';
 import 'Sub_Profile_Screens/change_password.dart';
 import 'Sub_Profile_Screens/edit_profile.dart';
+import 'Sub_Profile_Screens/export.dart';
 import 'Sub_Profile_Screens/subscription.dart';
 
 class ProfileScreen2 extends StatefulWidget {
@@ -37,7 +40,9 @@ class Profile_screen extends State<ProfileScreen2> {
       ProfileItem(imagePath: 'assets/icons/Subscription.svg', rowText: 'Subscription',onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context)=> Subscription()));
       },),
-      ProfileItem(imagePath: 'assets/icons/Export.svg', rowText: 'Export'),
+      ProfileItem(imagePath: 'assets/icons/Export.svg', rowText: 'Export',onTap: () {
+        Export(context);
+      },),
       ProfileItem(imagePath: 'assets/icons/delete_profile.svg', rowText: 'Delete Account',onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) => Signin()));
       },),
@@ -167,3 +172,6 @@ class ProfileItem {
     this.onTap,
   });
 }
+
+
+
