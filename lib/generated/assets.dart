@@ -37,6 +37,7 @@ class Assets {
   static const String iconsSignOut = 'assets/icons/SignOut.svg';
   static const String iconsStaff = 'assets/icons/staff.svg';
   static const String iconsSubscription = 'assets/icons/Subscription.svg';
+  static const String iconsSubscription2 = 'assets/icons/Subscription2.svg';
   static const String iconsSupplier = 'assets/icons/Supplier.svg';
   static const String iconsUser = 'assets/icons/User.svg';
   static const String iconsVector11 = 'assets/icons/Vector_11.svg';
@@ -50,7 +51,6 @@ class Assets {
   static const String imagesReporter2 = 'assets/images/reporter2.png';
   static const String imagesSplashScreen = 'assets/images/Splash_Screen.svg';
   static const String imagesTheNLogo = 'assets/images/the_N_logo.png';
-  static const String userAvtar = 'assets/images/user.jpg';
-
+  static const String imagesUserAvtar = 'assets/images/userAvtar.jpg';
 
 }

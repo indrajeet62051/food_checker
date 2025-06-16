@@ -8,6 +8,7 @@ import 'package:food_checker/screens/widget/row.dart';
 import 'Sub_Profile_Screens/Language.dart';
 import 'Sub_Profile_Screens/change_password.dart';
 import 'Sub_Profile_Screens/edit_profile.dart';
+import 'Sub_Profile_Screens/subscription.dart';
 
 class ProfileScreen2 extends StatefulWidget {
   @override
@@ -33,7 +34,9 @@ class Profile_screen extends State<ProfileScreen2> {
       ProfileItem(imagePath: 'assets/icons/language.svg', rowText: 'Language',onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context)=> Language()));
       },),
-      ProfileItem(imagePath: 'assets/icons/Subscription.svg', rowText: 'Subscription'),
+      ProfileItem(imagePath: 'assets/icons/Subscription.svg', rowText: 'Subscription',onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> Subscription()));
+      },),
       ProfileItem(imagePath: 'assets/icons/Export.svg', rowText: 'Export'),
       ProfileItem(imagePath: 'assets/icons/delete_profile.svg', rowText: 'Delete Account',onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) => Signin()));

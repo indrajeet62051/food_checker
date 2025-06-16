@@ -88,7 +88,7 @@ Widget commAppBar({
         children: [
           Row(children: [
             Padding(
-              padding: const EdgeInsets.only(right: 105),
+              padding: const EdgeInsets.only(right: 130),
               child: GestureDetector(onTap:  onTap,
                   child: Icon(Icons.arrow_back)),
             ),
