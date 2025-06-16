@@ -92,6 +92,7 @@ Widget commAppBar({
               child: GestureDetector(onTap:  onTap,
                   child: Icon(Icons.arrow_back)),
             ),
+
             commonText(text: app_bar, txtSize: 20, color: black, fontWeight: FontWeight.w600,),
           ]),
           SizedBox(height: 15),

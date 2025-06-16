@@ -5,6 +5,7 @@ import 'package:food_checker/screens/auth/login/login.dart';
 import 'package:food_checker/screens/widget/text.dart';
 import 'package:food_checker/screens/widget/row.dart';
 
+import 'Sub_Profile_Screens/Language.dart';
 import 'Sub_Profile_Screens/change_password.dart';
 import 'Sub_Profile_Screens/edit_profile.dart';
 
@@ -29,7 +30,9 @@ class Profile_screen extends State<ProfileScreen2> {
       ProfileItem(imagePath: 'assets/icons/changePassword.svg', rowText: 'Change Password',onTap: (){
         Navigator.push(context, MaterialPageRoute(builder: (context)=> Change_Password()));
       },),
-      ProfileItem(imagePath: 'assets/icons/language.svg', rowText: 'Language'),
+      ProfileItem(imagePath: 'assets/icons/language.svg', rowText: 'Language',onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> Language()));
+      },),
       ProfileItem(imagePath: 'assets/icons/Subscription.svg', rowText: 'Subscription'),
       ProfileItem(imagePath: 'assets/icons/Export.svg', rowText: 'Export'),
       ProfileItem(imagePath: 'assets/icons/delete_profile.svg', rowText: 'Delete Account',onTap: () {

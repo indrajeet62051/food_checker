@@ -19,9 +19,33 @@ class change_password extends State<Change_Password>{
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(children: [
-        commAppBar(app_bar: "Change Password",onTap: () {
-          Navigator.pop(context);
-        },),
+        Container(
+          height: 90, width: ScreenWight,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            boxShadow: [ BoxShadow(
+              color: graycol.withOpacity(0.3), blurRadius: 5, offset: Offset(0, 4),
+            )
+            ],),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 20,right: 20),
+            child: Column(mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Row(children: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 75),
+                    child: GestureDetector(onTap:  () {
+                      Navigator.pop(context);
+                    },
+                        child: Icon(Icons.arrow_back)),
+                  ),
+
+                  commonText(text: "Change Password", txtSize: 20, color: black, fontWeight: FontWeight.w600,),
+                ]),
+                SizedBox(height: 15),
+              ],
+            ),
+          ),), //App Bar
 
         SizedBox(width: ScreenWight*0.9069,
           child: Column(crossAxisAlignment: CrossAxisAlignment.center,children: [
