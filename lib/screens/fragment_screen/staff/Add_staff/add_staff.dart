@@ -4,25 +4,35 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:food_checker/generated/assets.dart';
 import 'package:food_checker/screens/widget/common_button.dart';
-import 'package:food_checker/screens/widget/text_field.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../../core/Constrants/color.dart';
 import '../../../widget/card.dart';
 import '../../../widget/text.dart';
+import 'add_staff_controller.dart';
 import '../staff_screen.dart';
 
 class AddStaff extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => add_staff();
 }
-bool isCheck = false, isCheck2 = false, isCheck3 = false;
 
 class add_staff extends State<AddStaff> {
-  File? _pickedImage;
-  final ImagePicker _picker = ImagePicker();
+  late final add_staff_controller _controller;
+  bool isCheck = false, isCheck2 = false, isCheck3 = false;
 
+  @override
+  void initState() {
+    super.initState();
+    _controller = add_staff_controller();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   Future<void> _pickImage() async {
     showModalBottomSheet(
@@ -36,11 +46,8 @@ class add_staff extends State<AddStaff> {
               title: Text('Gallery'),
               onTap: () async {
                 Navigator.pop(context);
-                final XFile? picked = await _picker.pickImage(
-                  source: ImageSource.gallery,
-                );
-                if (picked != null)
-                  setState(() => _pickedImage = File(picked.path));
+                await _controller.pickImage(ImageSource.gallery);
+                setState(() {});
               },
             ),
             ListTile(
@@ -48,17 +55,42 @@ class add_staff extends State<AddStaff> {
               title: Text('Camera'),
               onTap: () async {
                 Navigator.pop(context);
-                final XFile? picked = await _picker.pickImage(
-                  source: ImageSource.camera,
-                );
-                if (picked != null)
-                  setState(() => _pickedImage = File(picked.path));
+                await _controller.pickImage(ImageSource.camera);
+                setState(() {});
               },
             ),
           ],
         ),
       ),
     );
+  }
+
+  void _addStaff() {
+    if (_controller.isValid) {
+      // Get the selected branch name
+      String selectedBranch = "";
+      if (isCheck) selectedBranch = "Uttran";
+      if (isCheck2) selectedBranch = "Vesu";
+      if (isCheck3) selectedBranch = "Adajan";
+
+      final newStaff = StaffItem(
+        staffName:
+        "${_controller.first_name.text} ${_controller.last_Name.text}",
+        designation: _controller.role.text,
+        allocation: _controller.department.text,
+        kitchen_Location: selectedBranch,
+        image_path:
+        _controller.uploadedImage != null
+            ? _controller.uploadedImage!.path
+            : Assets.imagesBydefaultUser,
+      );
+
+      Navigator.pop(context, newStaff);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Please fill all fields and select a branch')),
+      );
+    }
   }
 
   @override
@@ -95,8 +127,14 @@ class add_staff extends State<AddStaff> {
                             child: Icon(Icons.arrow_back),
                           ),
                         ),
-                        commonText(text: "Add Staff", txtSize: 20, color: black, fontWeight: FontWeight.w600,
-                        ),],),
+                        commonText(
+                          text: "Add Staff",
+                          txtSize: 20,
+                          color: black,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ],
+                    ),
                     SizedBox(height: 15),
                   ],
                 ),
@@ -111,12 +149,12 @@ class add_staff extends State<AddStaff> {
                   SizedBox(height: 8),
                   GestureDetector(
                     onTap: _pickImage,
-                    child:DottedBorder(
+                    child: DottedBorder(
                       color: green,
                       strokeWidth: 1.5,
                       borderType: BorderType.RRect,
                       radius: Radius.circular(12),
-                      dashPattern: [8, 4], // dash, space
+                      dashPattern: [8, 4],
                       child: Container(
                         width: double.infinity,
                         height: 140,
@@ -124,14 +162,22 @@ class add_staff extends State<AddStaff> {
                           color: Colors.green.withOpacity(0.05),
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        child: _pickedImage == null
+                        child:
+                        _controller.uploadedImage == null
                             ? Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.add_circle_outline, color: green, size: 30),
+                            Icon(
+                              Icons.add_circle_outline,
+                              color: green,
+                              size: 30,
+                            ),
                             SizedBox(height: 8),
                             Container(
-                              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 8,
+                              ),
                               decoration: BoxDecoration(
                                 color: green,
                                 borderRadius: BorderRadius.circular(8),
@@ -146,14 +192,13 @@ class add_staff extends State<AddStaff> {
                             : ClipRRect(
                           borderRadius: BorderRadius.circular(12),
                           child: Image.file(
-                            _pickedImage!,
+                            _controller.uploadedImage!,
                             fit: BoxFit.cover,
                             width: double.infinity,
                           ),
                         ),
                       ),
-                    )
-                    ,
+                    ),
                   ),
                   SizedBox(height: 16),
                   SizedBox(
@@ -173,6 +218,7 @@ class add_staff extends State<AddStaff> {
                         width: ScreenWight * 0.420,
                         height: 55,
                         child: TextField(
+                          controller: _controller.first_name,
                           decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
@@ -193,6 +239,7 @@ class add_staff extends State<AddStaff> {
                         width: ScreenWight * 0.420,
                         height: 55,
                         child: TextField(
+                          controller: _controller.last_Name,
                           decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
@@ -211,10 +258,11 @@ class add_staff extends State<AddStaff> {
                     ],
                   ),
                   SizedBox(height: 12),
-                  commonText(text: "Emal", txtSize: 14),
+                  commonText(text: "Email", txtSize: 14),
                   Padding(
                     padding: const EdgeInsets.only(top: 8, bottom: 16),
                     child: TextField(
+                      controller: _controller.email,
                       decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
@@ -228,12 +276,13 @@ class add_staff extends State<AddStaff> {
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                    ), // Email
+                    ),
                   ),
                   commonText(text: "Role", txtSize: 14),
                   Padding(
                     padding: const EdgeInsets.only(top: 8, bottom: 16),
                     child: TextField(
+                      controller: _controller.role,
                       decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
@@ -253,6 +302,7 @@ class add_staff extends State<AddStaff> {
                   Padding(
                     padding: const EdgeInsets.only(top: 8, bottom: 16),
                     child: TextField(
+                      controller: _controller.department,
                       decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
@@ -269,18 +319,221 @@ class add_staff extends State<AddStaff> {
                     ),
                   ),
                   commonText(text: "Select Branch", txtSize: 14),
-                  AddStaffBranch(address: "Vesu"),
-                  AddStaffBranch(address: "uttran"),
-                  AddStaffBranch(address: "Adajan"),
+                  SizedBox(
+                    width: ScreenWight * 0.906,
+                    child: Card(
+                      margin: EdgeInsets.only(top: 8, bottom: 8),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                          top: 13,
+                          bottom: 13,
+                          right: 18,
+                          left: 18,
+                        ),
+                        child: Row(
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    SvgPicture.asset(Assets.iconsLocation),
+                                    commonText(
+                                      text: " Uttran",
+                                      txtSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                      color: black,
+                                    ),
+                                  ],
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 8),
+                                  child: commonText(
+                                    text:
+                                    "2464 Royal Ln. Mesa, New Jersey 45463",
+                                    txtSize: 10,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Spacer(),
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  isCheck = !isCheck;
+                                  _controller.toggleBranch(0);
+                                });
+                              },
+                              child: Container(
+                                width: 24,
+                                height: 24,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: isCheck ? green : Colors.transparent,
+                                  border: Border.all(color: green, width: 2),
+                                ),
+                                child:
+                                isCheck
+                                    ? Icon(
+                                  Icons.check,
+                                  size: 16,
+                                  color: Colors.white,
+                                )
+                                    : null,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: ScreenWight * 0.906,
+                    child: Card(
+                      margin: EdgeInsets.only(top: 8, bottom: 8),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                          top: 13,
+                          bottom: 13,
+                          right: 18,
+                          left: 18,
+                        ),
+                        child: Row(
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    SvgPicture.asset(Assets.iconsLocation),
+                                    commonText(
+                                      text: " Vesu",
+                                      txtSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                      color: black,
+                                    ),
+                                  ],
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 8),
+                                  child: commonText(
+                                    text:
+                                    "2464 Royal Ln. Mesa, New Jersey 45463",
+                                    txtSize: 10,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Spacer(),
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  isCheck2 = !isCheck2;
+                                  _controller.toggleBranch(1);
+                                });
+                              },
+                              child: Container(
+                                width: 24,
+                                height: 24,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: isCheck2 ? green : Colors.transparent,
+                                  border: Border.all(color: green, width: 2),
+                                ),
+                                child:
+                                isCheck2
+                                    ? Icon(
+                                  Icons.check,
+                                  size: 16,
+                                  color: Colors.white,
+                                )
+                                    : null,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: ScreenWight * 0.906,
+                    child: Card(
+                      margin: EdgeInsets.only(top: 8, bottom: 8),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                          top: 13,
+                          bottom: 13,
+                          right: 18,
+                          left: 18,
+                        ),
+                        child: Row(
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    SvgPicture.asset(Assets.iconsLocation),
+                                    commonText(
+                                      text: " Adajan",
+                                      txtSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                      color: black,
+                                    ),
+                                  ],
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 8),
+                                  child: commonText(
+                                    text:
+                                    "2464 Royal Ln. Mesa, New Jersey 45463",
+                                    txtSize: 10,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Spacer(),
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  isCheck3 = !isCheck3;
+                                  _controller.toggleBranch(2);
+                                });
+                              },
+                              child: Container(
+                                width: 24,
+                                height: 24,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: isCheck3 ? green : Colors.transparent,
+                                  border: Border.all(color: green, width: 2),
+                                ),
+                                child:
+                                isCheck3
+                                    ? Icon(
+                                  Icons.check,
+                                  size: 16,
+                                  color: Colors.white,
+                                )
+                                    : null,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 24, top: 40),
                     child: SizedBox(
                       width: ScreenWight * 0.936,
                       height: 60,
-                      child: commonButton(text: "Add Staff"),
+                      child: commonButton(text: "Add Staff",onPress: _addStaff),
                     ),
                   ),
-
                 ],
               ),
             ),
@@ -290,82 +543,3 @@ class add_staff extends State<AddStaff> {
     );
   }
 }
-
-class AddStaffBranch extends StatefulWidget {
-  final String address;
-
-  const AddStaffBranch({
-    super.key,
-    required this.address,
-  });
-
-  @override
-  State<AddStaffBranch> createState() => Branch();
-}
-class Branch extends State<AddStaffBranch> {
-  bool isCheck3 = false;
-
-  @override
-  Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-
-    return SizedBox(
-      width: screenWidth * 0.906,
-      child: Card(
-        margin: const EdgeInsets.symmetric(vertical: 8),
-        child: Padding(
-          padding: const EdgeInsets.all(13),
-          child: Row(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      SvgPicture.asset(Assets.iconsLocation),
-                      commonText(
-                        text: " Brew & Bite",
-                        txtSize: 14,
-                        fontWeight: FontWeight.w600,
-                        color: black,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  commonText(
-                    text: widget.address, // 👈 Use the required variable here
-                    txtSize: 10,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ],
-              ),
-              const Spacer(),
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    isCheck3 = !isCheck3;
-                  });
-                },
-                child: Container(
-                  width: 24,
-                  height: 24,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: isCheck3 ? green : Colors.transparent,
-                    border: Border.all(color: green, width: 2),
-                  ),
-                  child: isCheck3
-                      ? const Icon(Icons.check, size: 16, color: Colors.white)
-                      : null,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-
-

@@ -59,16 +59,10 @@ Widget commonButton({
   Widget? navigateTo,
   OutlinedBorder? buttonShape,
   double? elevation,
+  VoidCallback ? onPress,
 }) {
   return ElevatedButton(
-    onPressed: () {
-      if (navigateTo != null) {
-        Navigator.push(
-          context!,
-          MaterialPageRoute(builder: (context) => navigateTo),
-        );
-      }
-    },
+    onPressed: onPress,
     style: ButtonStyle(
       backgroundColor: WidgetStateProperty.all(buttonColor),
       elevation: WidgetStateProperty.all(elevation),

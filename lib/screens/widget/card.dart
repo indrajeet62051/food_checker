@@ -198,69 +198,69 @@ class ReportCard extends StatelessWidget {
 
 
 
-Widget commonCardforStaff(
-    StaffCard item
-    ){
-
-  return Padding(
-    padding: const EdgeInsets.only(left: 15,right: 15),
-    child: SizedBox(
-      width: ScreenWight * 0.906,
-      height: 102,
-      child: Card(
-        margin: EdgeInsets.only(bottom: 8),
-        child: Row(children: [
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: SizedBox( width: 70,height: 70,
-              child: CircleAvatar(backgroundColor: green,
-                child: SizedBox(height: 67,width: 67,  child: ClipOval(child: Image.asset(item.image_path ?? 'assets/images/bydefault_user.jpg',fit: BoxFit.cover,))),
-              ),
-            ),
-          ),  //staff Photo
-
-          Column(crossAxisAlignment: CrossAxisAlignment.start,children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 12,bottom: 4),
-              child: Row(children: [
-                commonText(text: item.staffName, txtSize: 14,fontWeight: FontWeight.w600,color: black),
-                commonText(text: " (", txtSize: 14,fontWeight: FontWeight.w600,color: green),
-                commonText(text: item.designation, txtSize: 14,fontWeight: FontWeight.w600,color: green),
-                commonText(text: ") ", txtSize: 14,fontWeight: FontWeight.w600,color: green),
-              ],),
-            ) , //staff name and designation
-            Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: commonText(text: item.allocation, txtSize: 12),
-            ),
-            Row(children: [
-              SvgPicture.asset('assets/icons/location.svg',),
-              Padding(
-                padding: const EdgeInsets.only(left: 5.0),
-                child: commonText(text: item.kitchen_Location, txtSize: 12,color: black),
-              )
-            ],) //Kitchen Location
-          ],),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(right: 22),
-              child: Row(mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 20),
-                    child: SvgPicture.asset('assets/icons/Edit.svg'),
-                  ),
-                  SvgPicture.asset('assets/icons/delete.svg'),
-                ],
-              ),
-            ),
-          )
-
-        ],),
-      ),
-    ),
-  );
-}
+// Widget commonCardforStaff(
+//     StaffCard item
+//     ){
+//
+//   return Padding(
+//     padding: const EdgeInsets.only(left: 15,right: 15),
+//     child: SizedBox(
+//       width: ScreenWight * 0.906,
+//       height: 102,
+//       child: Card(
+//         margin: EdgeInsets.only(bottom: 8),
+//         child: Row(children: [
+//           Padding(
+//             padding: const EdgeInsets.all(10.0),
+//             child: SizedBox( width: 70,height: 70,
+//               child: CircleAvatar(backgroundColor: green,
+//                 child: SizedBox(height: 67,width: 67,  child: ClipOval(child: Image.asset(item.image_path ?? 'assets/images/bydefault_user.jpg',fit: BoxFit.cover,))),
+//               ),
+//             ),
+//           ),  //staff Photo
+//
+//           Column(crossAxisAlignment: CrossAxisAlignment.start,children: [
+//             Padding(
+//               padding: const EdgeInsets.only(top: 12,bottom: 4),
+//               child: Row(children: [
+//                 commonText(text: item.staffName, txtSize: 14,fontWeight: FontWeight.w600,color: black),
+//                 commonText(text: " (", txtSize: 14,fontWeight: FontWeight.w600,color: green),
+//                 commonText(text: item.designation, txtSize: 14,fontWeight: FontWeight.w600,color: green),
+//                 commonText(text: ") ", txtSize: 14,fontWeight: FontWeight.w600,color: green),
+//               ],),
+//             ) , //staff name and designation
+//             Padding(
+//               padding: const EdgeInsets.only(bottom: 10),
+//               child: commonText(text: item.allocation, txtSize: 12),
+//             ),
+//             Row(children: [
+//               SvgPicture.asset('assets/icons/location.svg',),
+//               Padding(
+//                 padding: const EdgeInsets.only(left: 5.0),
+//                 child: commonText(text: item.kitchen_Location, txtSize: 12,color: black),
+//               )
+//             ],) //Kitchen Location
+//           ],),
+//           Expanded(
+//             child: Padding(
+//               padding: const EdgeInsets.only(right: 22),
+//               child: Row(mainAxisAlignment: MainAxisAlignment.end,
+//                 children: [
+//                   Padding(
+//                     padding: const EdgeInsets.only(right: 20),
+//                     child: SvgPicture.asset('assets/icons/Edit.svg'),
+//                   ),
+//                   SvgPicture.asset('assets/icons/delete.svg'),
+//                 ],
+//               ),
+//             ),
+//           )
+//
+//         ],),
+//       ),
+//     ),
+//   );
+// }
 
 
 Widget commonCardForSubFragmentPage({

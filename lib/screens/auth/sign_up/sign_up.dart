@@ -68,7 +68,7 @@ class Sign_up extends State<Signup>{
                   commonTextField(hintText: "Re-enter Password",Svg_Path: 'assets/icons/Lockcheck.svg'), //Conf Password
                   SizedBox(height: 48,),
                   SizedBox(height: 60,width: 390,
-                      child: commonButton(text: "Register", txtSize: 18, context: context,navigateTo: Signin())),
+                      child: commonButton(text: "Register", txtSize: 18, context: context,onPress: () {Navigator.push(context, MaterialPageRoute(builder: (context)=> Signin()));},)),
                   SizedBox(height: 40,),
                   Row(children: [
                     SvgPicture.asset('assets/images/Rectangle_27.svg'),SizedBox(width: 10,),Text("OR",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 14,fontFamily: 'PlusJakartaSans',color: graycol),),SizedBox(width: 10,),SvgPicture.asset('assets/images/Rectangle_27.svg')

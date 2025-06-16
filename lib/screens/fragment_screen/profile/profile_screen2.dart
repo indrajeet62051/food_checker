@@ -5,6 +5,8 @@ import 'package:food_checker/screens/auth/login/login.dart';
 import 'package:food_checker/screens/widget/text.dart';
 import 'package:food_checker/screens/widget/row.dart';
 
+import 'Sub_Profile_Screens/edit_profile.dart';
+
 class ProfileScreen2 extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => Profile_screen();
@@ -20,7 +22,9 @@ class Profile_screen extends State<ProfileScreen2> {
     final double ScreenWight = MediaQuery.of(context).size.width;
 
     List<ProfileItem> profileItems = [
-      ProfileItem(imagePath: 'assets/icons/Edit_pencil.svg', rowText: 'Edit Profile'),
+      ProfileItem(imagePath: 'assets/icons/Edit_pencil.svg', rowText: 'Edit Profile',onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>  EditProfileScreen()));
+      },),
       ProfileItem(imagePath: 'assets/icons/changePassword.svg', rowText: 'Change Password'),
       ProfileItem(imagePath: 'assets/icons/language.svg', rowText: 'Language'),
       ProfileItem(imagePath: 'assets/icons/Subscription.svg', rowText: 'Subscription'),

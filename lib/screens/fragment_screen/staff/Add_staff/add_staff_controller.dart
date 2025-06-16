@@ -14,6 +14,17 @@ class add_staff_controller {
   List<bool> branch =[false,false,false];
 
 
+
+  bool get isValid =>
+      first_name.text.isNotEmpty &&
+          last_Name.text.isNotEmpty &&
+          email.text.isNotEmpty &&
+          role.text.isNotEmpty &&
+          department.text.isNotEmpty &&
+          uploadedImage != null &&
+          branch.contains(true);
+
+
   Future<void> pickImage(ImageSource source) async {
     final XFile? picked = await picker.pickImage(source: source);
     if (picked != null) {
