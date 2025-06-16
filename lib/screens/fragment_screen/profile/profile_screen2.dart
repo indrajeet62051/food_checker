@@ -11,6 +11,7 @@ import 'Sub_Profile_Screens/Language.dart';
 import 'Sub_Profile_Screens/change_password.dart';
 import 'Sub_Profile_Screens/edit_profile.dart';
 import 'Sub_Profile_Screens/export.dart';
+import 'Sub_Profile_Screens/export2.dart';
 import 'Sub_Profile_Screens/subscription.dart';
 
 class ProfileScreen2 extends StatefulWidget {
@@ -41,7 +42,7 @@ class Profile_screen extends State<ProfileScreen2> {
         Navigator.push(context, MaterialPageRoute(builder: (context)=> Subscription()));
       },),
       ProfileItem(imagePath: 'assets/icons/Export.svg', rowText: 'Export',onTap: () {
-        Export(context);
+        Export2(context);
       },),
       ProfileItem(imagePath: 'assets/icons/delete_profile.svg', rowText: 'Delete Account',onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) => Signin()));
