@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'dart:async';
-
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:food_checker/generated/assets.dart';
+
+import '../OnBoardingScreen/into_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -13,19 +15,23 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
 
-    // Delay and navigate
-    Timer(Duration(seconds: 2), () {
-      Navigator.pushReplacementNamed(context, '/home');
+    // Simulate loading or check login
+    Future.delayed(Duration(seconds: 3), () {
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => into_screen()) // or HomeScreen()
+      );
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Expanded(
-        child: Center(child: SvgPicture.asset('assets/images/Splash_Screen.svg')),
+      body: Center(
+        child: Image.asset(Assets.imagesSpash_png,fit: BoxFit.fill,)),
       )
-    );
+    ;
   }
 }
+
+// ''

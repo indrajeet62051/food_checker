@@ -9,7 +9,8 @@ import '../fragment_screen/home/home_screen2.dart';
 import '../fragment_screen/staff/staff_screen.dart';
 import 'common_button.dart' show commonButton;
 
-double ScreenWight = 430.0;
+double ScreenWight = 430;
+double ScreenHeight = 914;
 
 Widget commonCardHomePage(HomeItem item) {
   return GestureDetector(
