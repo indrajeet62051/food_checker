@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_checker/screens/OnBoardingScreen/into_screen.dart';
+import 'package:food_checker/screens/OnBoardingScreen/intro_sscreen2.dart';
 import 'package:food_checker/screens/OnBoardingScreen/onBoarding_screen1.dart';
 import 'package:food_checker/screens/OnBoardingScreen/on_boarding.dart';
 import 'package:food_checker/screens/auth/forgot_password/forgot_password.dart';
