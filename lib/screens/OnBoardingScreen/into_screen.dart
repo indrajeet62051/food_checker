@@ -46,7 +46,7 @@ class Intro_Screen extends State<into_screen>{
                    radius: 16,
                  ),)),
          lastPage ?
-         Container(alignment: Alignment(0, .800),
+         Container(alignment: Alignment(0, 0.800),
            child: SizedBox(height: 55,width: 390,
                child: commonButton(text: "Start",buttonColor: green.withOpacity(0.9),txtSize: 18,
                  onPress: () {
