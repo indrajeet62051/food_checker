@@ -283,7 +283,7 @@ Widget commonCardForSubFragmentPage({
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              height: double.infinity,
+              height: 150,
               width: double.infinity,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),

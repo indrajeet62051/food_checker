@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:food_checker/generated/assets.dart';
+import 'package:food_checker/screens/fragment_screen/home/suppliers/supplier_details.dart';
 import 'package:food_checker/screens/widget/card.dart';
 
 import '../../../../core/Constrants/color.dart';
@@ -119,9 +120,9 @@ class suppliersMainScreen extends State<SuppliersMainScreen>{
                   ),
                 ),
               ),
-              commonCardForSubFragmentPage(imagePath: 'assets/images/bydefault_user.jpg',
-                  titalText: "delam", subText: "nn", temp: "12"),
-              commonCardForSubFragmentPage(imagePath: 'assets/images/bydefault_user.jpg',
+              commonCardForSubFragmentSuppierPage(context: context,imagePath: 'assets/images/bydefault_user.jpg',
+                  titalText: "delam", subText: "nn", temp: "12",),
+              commonCardForSubFragmentSuppierPage(context: context,imagePath: 'assets/images/bydefault_user.jpg',
                   titalText: "delam", subText: "ned jnr", temp: "12"),
             ],
           )
@@ -139,6 +140,83 @@ class suppliersMainScreen extends State<SuppliersMainScreen>{
           child: SvgPicture.asset('assets/icons/add_button.svg')),
     );
   }
+
+}
+
+
+Widget commonCardForSubFragmentSuppierPage({
+  required String imagePath,
+  required String titalText,
+  required String subText,
+  required String temp,
+  required BuildContext  context,
+
+
+
+
+}){
+  return GestureDetector(
+    onTap: () {
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>SupplierDetails()));
+    },
+    child: Card(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              height: 150,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                image: DecorationImage(
+                  image: AssetImage(imagePath),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 8, bottom: 0),
+              child: commonText(
+                text: titalText,
+                txtSize: 14,
+                fontWeight: FontWeight.w600,
+                color: Colors.black,
+              ),
+            ),
+            commonText(
+              text: subText,
+              txtSize: 11,
+              fontWeight: FontWeight.w600,
+            ),
+            Row(
+              children: [
+                commonText(
+                  text:  "Temp.: ",
+                  txtSize: 11,
+                  color: liteDarkgrey,
+                ),
+                commonText(
+                  text: temp,
+                  txtSize: 11,
+                  color: green,
+                  fontWeight: FontWeight.w600,
+                ),
+                commonText(
+                  text: "°C",
+                  txtSize: 11,
+                  color: green,
+                  fontWeight: FontWeight.w600,
+                )
+              ],
+            ),
+          ],
+        ),
+      ),
+    ),
+  )
+  ;
 
 }
 
