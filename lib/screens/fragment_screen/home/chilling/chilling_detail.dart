@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class cookin_details extends  StatelessWidget{
+class chilling_detail extends  StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: Text("Its cooking_details page"),),
+      body: Center(child: Text("Its chilling_details page"),),
     );
   }
 

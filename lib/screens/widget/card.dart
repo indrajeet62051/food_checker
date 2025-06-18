@@ -12,6 +12,20 @@ import 'common_button.dart' show commonButton;
 double ScreenWight = 430;
 double ScreenHeight = 914;
 
+
+
+class HomeItem {
+  final String iconPath;
+  final String text;
+  final VoidCallback? onTap;
+
+  HomeItem({
+    required this.iconPath,
+    required this.text,
+    this.onTap,
+  });
+}
+
 Widget commonCardHomePage(HomeItem item) {
   return GestureDetector(
     onTap: item.onTap,
@@ -264,18 +278,29 @@ class ReportCard extends StatelessWidget {
 // }
 
 
-Widget commonCardForSubFragmentPage({
-  required String imagePath,
-  required String titalText,
-  required String subText,
-  required String temp,
-   VoidCallback ? onTap,
+
+
+class fragmentCommCard {
+  final String imagePath;
+  final String titalText;
+  final VoidCallback? onTap;
+  final String subText;
+  final String temp;
+
+  fragmentCommCard({
+    required this.imagePath,
+    required this.titalText,
+    required this.subText,
+    required this.temp,
+    this.onTap,
+  });
+}
 
 
 
-}){
+Widget commonCardForSubFragmentPage(fragmentCommCard item){
   return GestureDetector(
-    onTap: onTap,
+    onTap: item.onTap,
     child: Card(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -288,7 +313,7 @@ Widget commonCardForSubFragmentPage({
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
                 image: DecorationImage(
-                  image: AssetImage(imagePath),
+                  image: AssetImage(item.imagePath),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -296,14 +321,14 @@ Widget commonCardForSubFragmentPage({
             Padding(
               padding: const EdgeInsets.only(top: 8, bottom: 0),
               child: commonText(
-                text: titalText,
+                text: item.titalText,
                 txtSize: 14,
                 fontWeight: FontWeight.w600,
                 color: Colors.black,
               ),
             ),
             commonText(
-              text: subText,
+              text: item.subText,
               txtSize: 11,
               fontWeight: FontWeight.w600,
             ),
@@ -315,7 +340,7 @@ Widget commonCardForSubFragmentPage({
                   color: liteDarkgrey,
                 ),
                 commonText(
-                  text: temp,
+                  text: item.temp,
                   txtSize: 11,
                   color: green,
                   fontWeight: FontWeight.w600,

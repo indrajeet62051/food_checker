@@ -4,6 +4,7 @@ import 'package:food_checker/generated/assets.dart';
 import 'package:food_checker/screens/widget/card.dart';
 
 import '../../../../core/Constrants/color.dart';
+import '../../../../utils/navigator.dart';
 import '../../../widget/text.dart';
 
 class HotHoldingMainscreen extends StatefulWidget{
@@ -19,6 +20,30 @@ class hotholdingMainScreen extends State<HotHoldingMainscreen>{
 
   @override
   Widget build(BuildContext context) {
+
+    List<Map<String, String>> hotHolding = [
+      {
+        "title": "oven",
+        "description": "Used for storing dairy...",
+        "image": "assets/images/bydefault_user.jpg",
+        "temp": "12"
+      },
+      {
+        "title": "grill",
+        "description": "Used for storing dairy...",
+        "image": "assets/images/bydefault_user.jpg",
+        "temp": "12"
+      },
+    ];
+
+
+    // List<fragmentCommCard> hotHolding = [
+    //   fragmentCommCard(imagePath: 'assets/images/bydefault_user.jpg',
+    //       titalText: "oven", subText: "Used for storing dairy...", temp: "12"),
+    //   fragmentCommCard(imagePath: 'assets/images/bydefault_user.jpg',
+    //       titalText: "grill", subText: "Used for storing dairy...", temp: "22"),
+    //
+    // ];
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(children: [
@@ -53,22 +78,33 @@ class hotholdingMainScreen extends State<HotHoldingMainscreen>{
 
 
 
-          GridView.count(
+          GridView.builder(
+            padding: const EdgeInsets.all(20),
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
-            primary: false,
-            padding: const EdgeInsets.all(20),
-            crossAxisSpacing: 5,
-            mainAxisSpacing: 5,
-            crossAxisCount: 2,
-            childAspectRatio: 0.76, // You can tweak this value
-            children: <Widget>[
-              commonCardForSubFragmentPage(imagePath: 'assets/images/bydefault_user.jpg',
-                  titalText: "oven", subText: "Used for storing dairy...", temp: "12"),
-              commonCardForSubFragmentPage(imagePath: 'assets/images/bydefault_user.jpg',
-                  titalText: "grill", subText: "Used for storing dairy...", temp: "22"),
-            ],
-          )
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 5,
+              mainAxisSpacing: 5,
+              childAspectRatio: 0.76, // Adjust as needed
+            ),
+            itemCount: hotHolding.length,
+            itemBuilder: (context, index) {
+              final itemData = hotHolding[index];
+              return commonCardForSubFragmentPage(
+                fragmentCommCard(
+                  titalText: itemData["title"]!,
+                  subText: itemData["description"]!,
+                  imagePath: itemData["image"]!,
+                  temp: itemData["temp"]!,
+                  onTap: Navigate_helper.navigationCallback(
+                    context,
+                    'hotholding',
+                  ),
+                ),
+              );
+            },
+          ),
 
 
 

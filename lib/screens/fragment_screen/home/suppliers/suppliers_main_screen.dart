@@ -121,9 +121,9 @@ class suppliersMainScreen extends State<SuppliersMainScreen>{
                 ),
               ),
               commonCardForSubFragmentSuppierPage(context: context,imagePath: 'assets/images/bydefault_user.jpg',
-                  titalText: "delam", subText: "nn", temp: "12",),
-              commonCardForSubFragmentSuppierPage(context: context,imagePath: 'assets/images/bydefault_user.jpg',
-                  titalText: "delam", subText: "ned jnr", temp: "12"),
+                  titalText: "delam", subText: "cooked Food", temp: "20",),
+              commonCardForSubFragmentSuppierPage(context: context,imagePath: 'assets/images/old_man.jpg',
+                  titalText: "Esther Howard", subText: " frozen  Food", temp: "12"),
             ],
           )
 
@@ -157,7 +157,10 @@ Widget commonCardForSubFragmentSuppierPage({
 }){
   return GestureDetector(
     onTap: () {
-      Navigator.push(context, MaterialPageRoute(builder: (context)=>SupplierDetails()));
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>SupplierDetails(title: titalText,
+        description: subText,
+        imagePath: imagePath,
+        temperature: temp,)));
     },
     child: Card(
       child: Padding(

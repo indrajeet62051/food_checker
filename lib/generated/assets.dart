@@ -46,13 +46,14 @@ class Assets {
   static const String imagesBydefaultUser = 'assets/images/bydefault_user.jpg';
   static const String imagesDish = 'assets/images/dish.png';
   static const String imagesGoogleAppleFacebook = 'assets/images/google_apple_facebook.svg';
+  static const String imagesOldMan = 'assets/images/old_man.jpg';
   static const String imagesOnBoardinScreen1 = 'assets/images/onBoardin_screen1.png';
   static const String imagesOnBoardinScreen2 = 'assets/images/onBoardin_screen2.png';
   static const String imagesOnBoardinScreen3 = 'assets/images/onBoardin_screen3.png';
   static const String imagesRectangle27 = 'assets/images/Rectangle_27.svg';
   static const String imagesReporter1 = 'assets/images/reporter1.png';
   static const String imagesReporter2 = 'assets/images/reporter2.png';
-  static const String imagesSpash_png = 'assets/images/spash_png.png';
+  static const String imagesSpashPng = 'assets/images/spash_png.png';
   static const String imagesSplashScreen = 'assets/images/Splash_Screen.svg';
   static const String imagesTheNLogo = 'assets/images/the_N_logo.png';
   static const String imagesUserAvtar = 'assets/images/userAvtar.jpg';

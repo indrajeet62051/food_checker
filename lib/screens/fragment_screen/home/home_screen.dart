@@ -144,14 +144,4 @@ class home_screen extends State<HomeScreen> {
   }
 }
 
-class HomeItem {
-  final String iconPath;
-  final String text;
-  final VoidCallback? onTap;
 
-  HomeItem({
-    required this.iconPath,
-    required this.text,
-    this.onTap,
-  });
-}
