@@ -20,7 +20,7 @@ class AddStaff extends StatefulWidget {
 
 class add_staff extends State<AddStaff> {
   late final add_staff_controller _controller;
-  bool isCheck = false, isCheck2 = false, isCheck3 = false;
+  int selectedBranchIndex = -1; // -1 means none selected
 
   @override
   void initState() {
@@ -67,12 +67,10 @@ class add_staff extends State<AddStaff> {
 
   void _addStaff() {
     if (_controller.isValid) {
-      // Get the selected branch name
       String selectedBranch = "";
-      if (isCheck) selectedBranch = "Uttran";
-      if (isCheck2) selectedBranch = "Vesu";
-      if (isCheck3) selectedBranch = "Adajan";
-
+      if (selectedBranchIndex == 0) selectedBranch = "Uttran";
+      if (selectedBranchIndex == 1) selectedBranch = "Vesu";
+      if (selectedBranchIndex == 2) selectedBranch = "Adajan";
       final newStaff = StaffItem(
         staffName:
         "${_controller.first_name.text} ${_controller.last_Name.text}",
@@ -84,7 +82,6 @@ class add_staff extends State<AddStaff> {
             ? _controller.uploadedImage!.path
             : Assets.imagesBydefaultUser,
       );
-
       Navigator.pop(context, newStaff);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -149,12 +146,7 @@ class add_staff extends State<AddStaff> {
                   SizedBox(height: 8),
                   GestureDetector(
                     onTap: _pickImage,
-                    child: DottedBorder(
-                      color: green,
-                      strokeWidth: 1.5,
-                      borderType: BorderType.RRect,
-                      radius: Radius.circular(12),
-                      dashPattern: [8, 4],
+                    child: DottedBorder(color: green, strokeWidth: 1.5, borderType: BorderType.RRect, radius: Radius.circular(12), dashPattern: [8, 4],
                       child: Container(
                         width: double.infinity,
                         height: 140,
@@ -361,7 +353,7 @@ class add_staff extends State<AddStaff> {
                             GestureDetector(
                               onTap: () {
                                 setState(() {
-                                  isCheck = !isCheck;
+                                  selectedBranchIndex = 0;
                                   _controller.toggleBranch(0);
                                 });
                               },
@@ -370,11 +362,14 @@ class add_staff extends State<AddStaff> {
                                 height: 24,
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color: isCheck ? green : Colors.transparent,
+                                  color:
+                                  selectedBranchIndex == 0
+                                      ? green
+                                      : Colors.transparent,
                                   border: Border.all(color: green, width: 2),
                                 ),
                                 child:
-                                isCheck
+                                selectedBranchIndex == 0
                                     ? Icon(
                                   Icons.check,
                                   size: 16,
@@ -430,7 +425,7 @@ class add_staff extends State<AddStaff> {
                             GestureDetector(
                               onTap: () {
                                 setState(() {
-                                  isCheck2 = !isCheck2;
+                                  selectedBranchIndex = 1;
                                   _controller.toggleBranch(1);
                                 });
                               },
@@ -439,11 +434,14 @@ class add_staff extends State<AddStaff> {
                                 height: 24,
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color: isCheck2 ? green : Colors.transparent,
+                                  color:
+                                  selectedBranchIndex == 1
+                                      ? green
+                                      : Colors.transparent,
                                   border: Border.all(color: green, width: 2),
                                 ),
                                 child:
-                                isCheck2
+                                selectedBranchIndex == 1
                                     ? Icon(
                                   Icons.check,
                                   size: 16,
@@ -499,7 +497,7 @@ class add_staff extends State<AddStaff> {
                             GestureDetector(
                               onTap: () {
                                 setState(() {
-                                  isCheck3 = !isCheck3;
+                                  selectedBranchIndex = 2;
                                   _controller.toggleBranch(2);
                                 });
                               },
@@ -508,11 +506,14 @@ class add_staff extends State<AddStaff> {
                                 height: 24,
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color: isCheck3 ? green : Colors.transparent,
+                                  color:
+                                  selectedBranchIndex == 2
+                                      ? green
+                                      : Colors.transparent,
                                   border: Border.all(color: green, width: 2),
                                 ),
                                 child:
-                                isCheck3
+                                selectedBranchIndex == 2
                                     ? Icon(
                                   Icons.check,
                                   size: 16,
@@ -531,7 +532,10 @@ class add_staff extends State<AddStaff> {
                     child: SizedBox(
                       width: ScreenWight * 0.936,
                       height: 60,
-                      child: commonButton(text: "Add Staff",onPress: _addStaff),
+                      child: commonButton(
+                        text: "Add Staff",
+                        onPress: _addStaff,
+                      ),
                     ),
                   ),
                 ],

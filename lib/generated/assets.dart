@@ -13,6 +13,7 @@ class Assets {
   static const String iconsCooking = 'assets/icons/cooking.svg';
   static const String iconsDelete = 'assets/icons/delete.svg';
   static const String iconsDeleteMaintanace = 'assets/icons/delete_maintanace.svg';
+  static const String iconsDeleteOutline = 'assets/icons/delete_outline.svg';
   static const String iconsDeleteProfile = 'assets/icons/delete_profile.svg';
   static const String iconsEdit = 'assets/icons/Edit.svg';
   static const String iconsEditMaintanance = 'assets/icons/edit_maintanance.svg';

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:food_checker/screens/fragment_screen/home/home_screen.dart';
 import 'package:food_checker/screens/widget/text.dart';
+import 'dart:io';
 
 import '../../core/Constrants/color.dart';
 import '../fragment_screen/home/home_screen2.dart';
@@ -12,18 +13,12 @@ import 'common_button.dart' show commonButton;
 double ScreenWight = 430;
 double ScreenHeight = 914;
 
-
-
 class HomeItem {
   final String iconPath;
   final String text;
   final VoidCallback? onTap;
 
-  HomeItem({
-    required this.iconPath,
-    required this.text,
-    this.onTap,
-  });
+  HomeItem({required this.iconPath, required this.text, this.onTap});
 }
 
 Widget commonCardHomePage(HomeItem item) {
@@ -47,7 +42,6 @@ Widget commonCardHomePage(HomeItem item) {
                   color: black,
                 ),
               ),
-
 
               SvgPicture.asset('assets/icons/right_sid_arrow.svg'),
             ],
@@ -78,140 +72,164 @@ class ReportCard extends StatelessWidget {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
 
-    return Card(elevation: 5, color: whiteColor,
+    return Card(
+      elevation: 5,
+      color: whiteColor,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Row(
-            children: [
-              commonText(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                commonText(
                   text: "Report :  ",
                   txtSize: 18,
                   color: greenColor,
-                  fontWeight: FontWeight.w600),
-              Expanded(
-                child: commonText(
+                  fontWeight: FontWeight.w600,
+                ),
+                Expanded(
+                  child: commonText(
                     text: reportTitle,
                     txtSize: 18,
                     fontWeight: FontWeight.w600,
-                    color: black),
-              )
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 12, bottom: 20),
-            child: commonText(text: reportDetail, txtSize: 14),
-          ),
-          commonText(text: "Task", txtSize: 14),
-          Card(
-            child: Padding(
-              padding:
-              const EdgeInsets.only(top: 12, bottom: 12, left: 8, right: 8),
-              child:
-              commonText(text: taskText, txtSize: 14, color: black),
-            ),
-          ),
-          SizedBox(
-            width: screenWidth * 0.501,
-            child: Card(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(50),
+                    color: black,
                   ),
+                ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 12, bottom: 20),
+              child: commonText(text: reportDetail, txtSize: 14),
+            ),
+            commonText(text: "Task", txtSize: 14),
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  top: 12,
+                  bottom: 12,
+                  left: 8,
+                  right: 8,
+                ),
+                child: commonText(text: taskText, txtSize: 14, color: black),
+              ),
+            ),
+            SizedBox(
+              width: screenWidth * 0.501,
+              child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(50),
+                ),
 
-              margin: const EdgeInsets.only(top: 16, bottom: 16),
+                margin: const EdgeInsets.only(top: 16, bottom: 16),
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        top: 4,
+                        bottom: 4,
+                        left: 4,
+                        right: 6,
+                      ),
+                      child: CircleAvatar(child: Image.asset(userAvatarPath)),
+                    ),
+                    Expanded(
+                      child: commonText(
+                        text: reporterName,
+                        txtSize: 14,
+                        color: black,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                color: litegray,
+              ),
+              child: TextField(
+                decoration: InputDecoration(
+                  hintText: "Comment",
+                  hintStyle: const TextStyle(
+                    color: graycol,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14,
+                  ),
+                  suffixIcon: Padding(
+                    padding: const EdgeInsets.only(
+                      left: 10,
+                      top: 10,
+                      bottom: 10,
+                      right: 20,
+                    ),
+                    child: SvgPicture.asset(
+                      'assets/icons/send_arrow.svg',
+                      width: 24,
+                      height: 24,
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: const BorderSide(color: Colors.transparent),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: const BorderSide(color: greenColor, width: 2.0),
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 24, bottom: 20),
               child: Row(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        top: 4, bottom: 4, left: 4, right: 6),
-                    child: CircleAvatar(
-                        child: Image.asset(userAvatarPath)),
-                  ),
-                  Expanded(
-                    child: commonText(
-                        text: reporterName, txtSize: 14, color: black),
-                  )
-                ],
-              ),
-            ),
-          ),
-          Container(
-
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              color: litegray,
-            ),
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: "Comment",
-                hintStyle: const TextStyle(
-                    color: graycol, fontWeight: FontWeight.w500, fontSize: 14),
-                suffixIcon: Padding(
-                  padding: const EdgeInsets.only(
-                      left: 10, top: 10, bottom: 10, right: 20),
-                  child: SvgPicture.asset('assets/icons/send_arrow.svg',
-                      width: 24, height: 24, fit: BoxFit.contain),
-                ),
-                enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: const BorderSide(color: Colors.transparent)),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: greenColor, width: 2.0),
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
-
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 24, bottom: 20),
-            child: Row(
-              children: [
-                SizedBox(
-                  height: 50,
-                  width: screenWidth * 0.397,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: greenColor, width: 2.0),
-                      borderRadius: BorderRadius.circular(20),
-                      color: greenColor.withOpacity(0.1),
-                    ),
-                    child: Center(
-                      child: commonText(
+                  SizedBox(
+                    height: 50,
+                    width: screenWidth * 0.397,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: greenColor, width: 2.0),
+                        borderRadius: BorderRadius.circular(20),
+                        color: greenColor.withOpacity(0.1),
+                      ),
+                      child: Center(
+                        child: commonText(
                           text: "Checking",
                           txtSize: 16,
                           color: greenColor,
-                          fontWeight: FontWeight.w700),
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(width: 10),
-                SizedBox(
-                  height: 50,
-                  width: screenWidth * 0.397,
-                  child: commonButton(
-                    text: "Resolve",
-                    textColor: whiteColor,
-                    txtSize: 16,
-                    buttonShape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
+                  const SizedBox(width: 10),
+                  SizedBox(
+                    height: 50,
+                    width: screenWidth * 0.397,
+                    child: commonButton(
+                      text: "Resolve",
+                      textColor: whiteColor,
+                      txtSize: 16,
+                      buttonShape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
                     ),
                   ),
-                )
-              ],
+                ],
+              ),
             ),
-          ),
-        ]),
+          ],
+        ),
       ),
     );
   }
 }
-
-
-
 
 // Widget commonCardforStaff(
 //     StaffCard item
@@ -277,9 +295,6 @@ class ReportCard extends StatelessWidget {
 //   );
 // }
 
-
-
-
 class fragmentCommCard {
   final String imagePath;
   final String titalText;
@@ -296,9 +311,29 @@ class fragmentCommCard {
   });
 }
 
+// Helper to build image from asset or file
+Widget buildCardImage(String imagePath,
+    {double ? height,}
 
+    ) {
+  if (imagePath.startsWith('assets/')) {
+    return Image.asset(
+      imagePath,
+      fit: BoxFit.cover,
+      width: double.infinity,
+      height: height,
+    );
+  } else {
+    return Image.file(
+      File(imagePath),
+      fit: BoxFit.cover,
+      width: double.infinity,
+      height: height,
+    );
+  }
+}
 
-Widget commonCardForSubFragmentPage(fragmentCommCard item){
+Widget commonCardForSubFragmentPage(fragmentCommCard item) {
   return GestureDetector(
     onTap: item.onTap,
     child: Card(
@@ -307,15 +342,12 @@ Widget commonCardForSubFragmentPage(fragmentCommCard item){
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
+            SizedBox(
               height: 150,
               width: double.infinity,
-              decoration: BoxDecoration(
+              child: ClipRRect(
                 borderRadius: BorderRadius.circular(8),
-                image: DecorationImage(
-                  image: AssetImage(item.imagePath),
-                  fit: BoxFit.cover,
-                ),
+                child: buildCardImage(item.imagePath,),
               ),
             ),
             Padding(
@@ -328,17 +360,15 @@ Widget commonCardForSubFragmentPage(fragmentCommCard item){
               ),
             ),
             commonText(
-              text: item.subText,
+              text: item.subText.length > 26
+                  ? '${item.subText.substring(0, 26)}...'
+                  : item.subText,
               txtSize: 11,
               fontWeight: FontWeight.w600,
             ),
             Row(
               children: [
-                commonText(
-                  text:  "Temp.: ",
-                  txtSize: 11,
-                  color: liteDarkgrey,
-                ),
+                commonText(text: "Temp.: ", txtSize: 11, color: liteDarkgrey),
                 commonText(
                   text: item.temp,
                   txtSize: 11,
@@ -350,16 +380,12 @@ Widget commonCardForSubFragmentPage(fragmentCommCard item){
                   txtSize: 11,
                   color: green,
                   fontWeight: FontWeight.w600,
-                )
+                ),
               ],
             ),
           ],
         ),
       ),
     ),
-  )
-    ;
-
+  );
 }
-
-
