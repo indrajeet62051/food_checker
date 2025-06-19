@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:food_checker/generated/assets.dart';
+import 'package:food_checker/screens/fragment_screen/home/chilling/chilling_detail.dart';
 import 'package:food_checker/screens/widget/card.dart';
 
 import '../../../../core/Constrants/color.dart';
@@ -88,10 +89,13 @@ class chillingMainScreen extends State<ChillingMainScreen>{
                 subText: itemData["description"]!,
                 imagePath: itemData["image"]!,
                 temp: itemData["temp"]!,
-                onTap: Navigate_helper.navigationCallback(
-                  context,
-                  'chilling',
-                ),
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>chilling_detail()));
+                },
+                // onTap: Navigate_helper.navigationCallback(
+                //   context,
+                //   'chilling',
+                // ),
               ),
             );
           },

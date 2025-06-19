@@ -6,8 +6,13 @@ import '../../core/Constrants/color.dart';
 Widget commonTextField({
 required String hintText,
    String? Svg_Path,
+  TextEditingController ? controller,
 }){
-  return TextField(decoration: InputDecoration(
+  return TextField(
+
+    controller: controller,
+
+    decoration: InputDecoration(
     hintText: hintText,
     hintStyle: TextStyle(color: graycol,fontWeight: FontWeight.w600,fontSize: 16),
     prefixIcon: Svg_Path != null

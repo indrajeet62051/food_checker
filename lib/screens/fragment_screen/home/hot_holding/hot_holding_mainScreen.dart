@@ -6,6 +6,7 @@ import 'package:food_checker/screens/widget/card.dart';
 import '../../../../core/Constrants/color.dart';
 import '../../../../utils/navigator.dart';
 import '../../../widget/text.dart';
+import 'hotholding_details.dart';
 
 class HotHoldingMainscreen extends StatefulWidget{
   @override
@@ -97,10 +98,13 @@ class hotholdingMainScreen extends State<HotHoldingMainscreen>{
                   subText: itemData["description"]!,
                   imagePath: itemData["image"]!,
                   temp: itemData["temp"]!,
-                  onTap: Navigate_helper.navigationCallback(
-                    context,
-                    'hotholding',
-                  ),
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>hotholding_detail()));
+                  },
+                  // onTap: Navigate_helper.navigationCallback(
+                  //   context,
+                  //   'hotholding',
+                  // ),
                 ),
               );
             },

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:food_checker/generated/assets.dart';
+import 'package:food_checker/screens/fragment_screen/home/cooking/cooking_details.dart';
 import 'package:food_checker/screens/widget/card.dart';
 
 import '../../../../core/Constrants/color.dart';
 import '../../../../utils/navigator.dart';
 import '../../../widget/text.dart';
+import 'add cooking/add_cooking.dart';
 
 class CookingMainScreen extends StatefulWidget{
   @override
@@ -37,16 +39,16 @@ class cookingScreen extends State<CookingMainScreen>{
       },
     ];
 
-    List<fragmentCommCard> fragcard = [
-      fragmentCommCard(imagePath: 'assets/images/bydefault_user.jpg',
-        titalText: "delam", subText: "nn", temp: "12",onTap: () {
-          Navigate_helper.NavigateToCookingDetails(context);
-        },),
-      fragmentCommCard(imagePath: 'assets/images/bydefault_user.jpg',
-          titalText: "delam", subText: "ned jnr", temp: "12",onTap: () {
-            Navigate_helper.NavigateToCookingDetails(context);
-          }),
-    ];
+    // List<fragmentCommCard> fragcard = [
+    //   fragmentCommCard(imagePath: 'assets/images/bydefault_user.jpg',
+    //     titalText: "delam", subText: "nn", temp: "12",onTap: () {
+    //       Navigate_helper.NavigateToCookingDetails(context);
+    //     },),
+    //   fragmentCommCard(imagePath: 'assets/images/bydefault_user.jpg',
+    //       titalText: "delam", subText: "ned jnr", temp: "12",onTap: () {
+    //         Navigate_helper.NavigateToCookingDetails(context);
+    //       }),
+    // ];
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -92,7 +94,7 @@ class cookingScreen extends State<CookingMainScreen>{
               mainAxisSpacing: 5,
               childAspectRatio: 0.76, // Adjust as needed
             ),
-            itemCount: fragcard.length,
+            itemCount: data.length,
             itemBuilder: (context, index) {
               final itemData = data[index];
               return commonCardForSubFragmentPage(
@@ -101,10 +103,13 @@ class cookingScreen extends State<CookingMainScreen>{
                   subText: itemData["description"]!,
                   imagePath: itemData["image"]!,
                   temp: itemData["temp"]!,
-                  onTap: Navigate_helper.navigationCallback(
-                    context,
-                    'cooking',
-                  ),
+                  // onTap: Navigate_helper.navigationCallback(
+                  //   context,
+                  //   'cooking',
+                  // ),
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=> cookin_details()));
+                  },
                 ),
               );
             },
@@ -117,6 +122,7 @@ class cookingScreen extends State<CookingMainScreen>{
         ],),
       ),
         floatingActionButton: FloatingActionButton(onPressed: (){
+          Navigator.push(context, MaterialPageRoute(builder: (context)=> AddCooking()));
     },
     backgroundColor: Colors.transparent,
     elevation: 0,

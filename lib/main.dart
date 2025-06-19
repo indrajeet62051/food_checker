@@ -8,6 +8,7 @@ import 'package:food_checker/screens/auth/login/Login_clipPath.dart';
 import 'package:food_checker/screens/auth/login/login.dart';
 import 'package:food_checker/screens/auth/sign_up/sign_up.dart';
 import 'package:food_checker/screens/fragment_screen/fragment_screen.dart';
+import 'package:food_checker/screens/fragment_screen/home/cooking/add%20cooking/add_cooking.dart';
 import 'package:food_checker/screens/fragment_screen/home/home_screen.dart';
 import 'package:food_checker/screens/fragment_screen/home/maintenance/maintenance_main_screen.dart';
 import 'package:food_checker/screens/fragment_screen/profile/profile_screen2.dart';
