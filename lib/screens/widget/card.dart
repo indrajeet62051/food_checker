@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:food_checker/screens/fragment_screen/home/home_screen.dart';
 import 'package:food_checker/screens/widget/text.dart';
+import 'package:intl/intl.dart';
 import 'dart:io';
 
 import '../../core/Constrants/color.dart';
@@ -389,3 +390,85 @@ Widget commonCardForSubFragmentPage(fragmentCommCard item) {
     ),
   );
 }
+
+
+
+
+Widget commonCardForHistory({
+  required String title,
+  required String description,
+  required String temp,
+  required DateTime date,
+  required bool isSelected,
+  required VoidCallback onTap,
+}) {
+  return GestureDetector(
+    onTap: onTap,
+    child: Container(
+      decoration: BoxDecoration(
+        color: black.withOpacity(0.02),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: black.withOpacity(0.06),
+          width: 1,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: litegray.withOpacity(0.5),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          commonText(
+            text: title,
+            txtSize: 16,
+            color: black,
+            fontWeight: FontWeight.w600,
+          ),
+          const SizedBox(height: 4),
+          commonText(
+              text: description.length > 77
+                  ? '${description.substring(0, 78)}...'
+                  : description,
+              txtSize: 15
+          ),
+          const SizedBox(height: 8),
+          Row(
+            children: [
+              commonText(
+                text: 'Temp.: ',
+                txtSize: 14,
+                fontWeight: FontWeight.w500,
+              ),
+              commonText(
+                text: temp,
+                txtSize: 14,
+                color: greenColor,
+                fontWeight: FontWeight.w500,
+              ),
+              const SizedBox(width: 24),
+              SvgPicture.asset(
+                'assets/icons/calendar.svg',
+                height: 18,
+                width: 18,
+              ),
+              const SizedBox(width: 8),
+              commonText(
+                text: DateFormat('dd-MMM-yyyy, hh:mm a').format(date),
+                txtSize: 13,
+                color: graycol,
+                fontWeight: FontWeight.w500,
+              ),
+            ],
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
