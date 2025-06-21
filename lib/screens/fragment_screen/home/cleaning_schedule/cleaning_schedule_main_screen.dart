@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:food_checker/generated/assets.dart';
+import 'package:food_checker/screens/fragment_screen/home/cooking/cooking_main_screen.dart';
 import 'package:food_checker/screens/widget/card.dart';
 
 import '../../../../core/Constrants/color.dart';
 import '../../../widget/text.dart';
+import 'cleaning_details.dart';
+import 'cleaning_history.dart';
 
 class CleaningScheduleMainScreen extends StatefulWidget{
   @override
@@ -13,11 +16,19 @@ class CleaningScheduleMainScreen extends StatefulWidget{
 }
 
 class cleaningScheduleMainScreen extends State<CleaningScheduleMainScreen>{
-  get profileItems => null;
+
 
 
 
   @override
+
+  List<cleaningCard> cleaningCardList = [cleaningCard(imagePath: 'assets/images/dish.png', allocation: "Floor",
+      shedule: "Daily", area: "customer Area"),
+    cleaningCard(imagePath: Assets.imagesWomanFridge, allocation: "Kitchen", shedule: "Monthaly", area: "back kitchen")
+
+  ];
+
+
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
@@ -42,7 +53,13 @@ class cleaningScheduleMainScreen extends State<CleaningScheduleMainScreen>{
                     ),
                     commonText(text: "Cleaning", txtSize: 20, color: black, fontWeight: FontWeight.w600,),
                     Spacer(),
-                    SvgPicture.asset('assets/icons/history.svg', ),
+                    GestureDetector(onTap: () {
+                      
+                    },
+                        child: GestureDetector(onTap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=> CleaningHistory()));
+                        },
+                            child: SvgPicture.asset('assets/icons/history.svg', ))),
 
                   ]),
                   SizedBox(height: 15),
@@ -53,82 +70,26 @@ class cleaningScheduleMainScreen extends State<CleaningScheduleMainScreen>{
 
 
 
-          GridView.count(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            primary: false,
-            padding: const EdgeInsets.all(20),
-            crossAxisSpacing: 5,
-            mainAxisSpacing: 5,
-            crossAxisCount: 2,
-            childAspectRatio: 0.76, // You can tweak this value
-            children: <Widget>[
-              Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        height: 150,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          image: DecorationImage(
-                            image: AssetImage('assets/images/dish.png'),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8, bottom: 0),
-                        child: commonText(
-                          text: "Toilet",
-                          txtSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black,
-                        ),
-                      ),
-                      Row(
-                        children: [
-                          commonText(
-                            text: "Requirement : ",
-                            txtSize: 11,
-                            fontWeight: FontWeight.w600,
-                          ),
-                          commonText(
-                            text: "Daily",
-                            txtSize: 11,
-                            color: green,
-                            fontWeight: FontWeight.w600,
-                          ),
+         GridView.builder(shrinkWrap: true,
+             padding: EdgeInsets.all(20),
+             physics: NeverScrollableScrollPhysics(),
+             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,childAspectRatio: 0.75,crossAxisSpacing: 5 ,mainAxisSpacing: 5),
+            itemCount: cleaningCardList.length,
+             itemBuilder: (context,index){
+           final card = cleaningCardList[index];
+           return  commonCardCleaningMain(cleaningCard(imagePath: card.imagePath,allocation: card.allocation,area: card.area,shedule: card.shedule
+               ,navigator: () {
+                 Navigator.push(context, MaterialPageRoute(builder: (context)=>CleaningDetails(title: card.allocation,imagePath: card.imagePath , Requirment: card.shedule  , Location: card.area)));
+               },));
 
 
-                        ]),
-                      Row(
-                        children: [
-                          SvgPicture.asset('assets/icons/location.svg'),
-                          commonText(
-                            text: " Location: ",
-                            txtSize: 11,
-                            color: liteDarkgrey,
-                          ),
-                          commonText(
-                            text: "Area",
-                            txtSize: 11,
-                            color: green,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              
-              commonCardCleaningMain(imagePath: 'assets/images/dish.png', allocation: "Floor", shedule: "Daily", area: "customer Area")
-            ],
-          )
+             }
+
+
+
+
+
+         )
 
 
 
@@ -146,17 +107,30 @@ class cleaningScheduleMainScreen extends State<CleaningScheduleMainScreen>{
 
 }
 
-Widget commonCardCleaningMain({
-  required String imagePath,
-  required String allocation,
-  required String shedule,
-  required String area,
-  VoidCallback ? navigator,
+class cleaningCard{
 
-}){
+
+  final String imagePath;
+  final String allocation;
+  final String shedule;
+  final String area;
+  final VoidCallback ? navigator;
+
+  cleaningCard({
+
+    required this.imagePath,
+    required this.allocation,
+    required this.shedule,
+    required this.area,
+    this.navigator,
+
+});
+}
+
+Widget commonCardCleaningMain(cleaningCard item){
 
   return   GestureDetector(
-    onTap: navigator,
+    onTap: item.navigator,
     child: Card(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -169,7 +143,7 @@ Widget commonCardCleaningMain({
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
                 image: DecorationImage(
-                  image: AssetImage(imagePath),
+                  image: AssetImage(item.imagePath),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -177,7 +151,7 @@ Widget commonCardCleaningMain({
             Padding(
               padding: const EdgeInsets.only(top: 8, bottom: 0),
               child: commonText(
-                text: allocation,
+                text: item.allocation,
                 txtSize: 14,
                 fontWeight: FontWeight.w600,
                 color: Colors.black,
@@ -191,7 +165,7 @@ Widget commonCardCleaningMain({
                     fontWeight: FontWeight.w600,
                   ),
                   commonText(
-                    text: shedule,
+                    text: item.shedule,
                     txtSize: 11,
                     color: green,
                     fontWeight: FontWeight.w600,
@@ -208,7 +182,7 @@ Widget commonCardCleaningMain({
                   color: liteDarkgrey,
                 ),
                 commonText(
-                  text: area,
+                  text: item.area,
                   txtSize: 11,
                   color: green,
                   fontWeight: FontWeight.w600,

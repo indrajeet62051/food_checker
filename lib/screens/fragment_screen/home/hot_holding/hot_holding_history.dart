@@ -1,22 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:food_checker/generated/assets.dart';
-import '../../../../core/Constrants/color.dart';
+import '../../../../../core/Constrants/color.dart';
+import 'package:intl/intl.dart';
+
 import '../../../widget/card.dart';
 import '../../../widget/common_filter.dart';
 import '../../../widget/text.dart';
-import 'package:intl/intl.dart';
 
 
-class CookingHistory extends StatefulWidget {
-  const CookingHistory({Key? key}) : super(key: key);
+class HotHoldingHistory extends StatefulWidget {
+  const HotHoldingHistory({Key? key}) : super(key: key);
 
   @override
-  State<CookingHistory> createState() => _CookingHistoryState();
+  State<HotHoldingHistory> createState() => hotHoldingHistory();
 }
 
-class _CookingHistoryState extends State<CookingHistory> {
+class hotHoldingHistory extends State<HotHoldingHistory> {
   int selectedIndex = 1;
+  
+
 
   // final List<Map<String, dynamic>> historyList = [
   //   {
@@ -45,29 +48,14 @@ class _CookingHistoryState extends State<CookingHistory> {
   @override
   Widget build(BuildContext context) {
 
-    final List<HistoryCommonCard> CookingHistoryList = [
-      HistoryCommonCard(
-        title: 'Spaghetti Carbonara',
-        description: 'Used for baking cheesecakes, roasting meats, and broiling French onion soup...',
-        temp: '23°C',
-        date: DateTime(2025, 3, 25, 8, 30),
-      ),
-      HistoryCommonCard(
-        title: 'Grilled Salmon with Lemon Butter',
-        description: 'Used for baking cheesecakes, roasting meats, and broiling French onion soup...',
-        temp: '23°C',
-        date: DateTime(2025, 3, 26, 9, 30),
-      ),
-      HistoryCommonCard(
-        title: 'Chicken Teriyaki',
-        description: 'Used for baking cheesecakes, roasting meats, and broiling French onion soup...',
-        temp: '23°C',
-        date: DateTime(2025, 3, 27, 10, 0),
-      ),
-    ];
-
-
-
+    List<HistoryCommonCard> hotHoldingHistoryList =[HistoryCommonCard(title: "Oven", 
+      description: "An oven is a kitchen appliance used for baking, "
+          "roasting, and heating food. It operates by generating and maintaining heat within an enclosed space, "
+          "ensuring even cooking. Ovens can be powered by electricity,"
+          " gas, or even wood in traditional setups.",
+      temp: "23°C", date: DateTime(2025, 3, 26, 9, 30),)];
+    
+    
     return Scaffold(
       backgroundColor: scaffoldColor,
       body: Column(
@@ -95,7 +83,7 @@ class _CookingHistoryState extends State<CookingHistory> {
                 ),
                 Spacer(),
                 commonText(
-                  text: 'Cooking History',
+                  text: 'HotHolding History',
                   txtSize: 20,
                   color: black,
                   fontWeight: FontWeight.w600,
@@ -124,12 +112,12 @@ class _CookingHistoryState extends State<CookingHistory> {
           Expanded(
             child: ListView.builder(
               padding: const EdgeInsets.symmetric(horizontal: 12),
-              itemCount: CookingHistoryList.length,
+              itemCount: hotHoldingHistoryList.length,
               itemBuilder: (context, index) {
-                final card = CookingHistoryList[index];
+                final card = hotHoldingHistoryList[index];
                 return  commonCardForHistory(HistoryCommonCard(title: card.title, description: card.description,
                     temp: card.temp, date: card.date));
-                // commonCardForSubFragmentPage(
+                  // commonCardForSubFragmentPage(
                 //   HistoryCommonCard(
                 //     imagePath: card.imagePath,
                 //     titalText: card.titalText,

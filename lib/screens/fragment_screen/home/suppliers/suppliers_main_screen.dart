@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:food_checker/generated/assets.dart';
 import 'package:food_checker/screens/fragment_screen/home/suppliers/supplier_details.dart';
+import 'package:food_checker/screens/fragment_screen/home/suppliers/supplier_history.dart';
 import 'package:food_checker/screens/widget/card.dart';
 
 import '../../../../core/Constrants/color.dart';
@@ -43,7 +44,10 @@ class suppliersMainScreen extends State<SuppliersMainScreen>{
                     ),
                     commonText(text: "Suppliers", txtSize: 20, color: black, fontWeight: FontWeight.w600,),
                     Spacer(),
-                    SvgPicture.asset('assets/icons/history.svg', ),
+                    GestureDetector(onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> SupplierHistory()));
+                    },
+                        child: SvgPicture.asset('assets/icons/history.svg', )),
 
                   ]),
                   SizedBox(height: 15),

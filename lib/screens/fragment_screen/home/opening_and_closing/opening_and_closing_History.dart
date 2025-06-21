@@ -1,21 +1,29 @@
+
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
+
+import '../../../../core/Constrants/color.dart';
+import '../../../widget/text.dart';
+
+
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:food_checker/generated/assets.dart';
-import '../../../../core/Constrants/color.dart';
 import '../../../widget/card.dart';
 import '../../../widget/common_filter.dart';
-import '../../../widget/text.dart';
-import 'package:intl/intl.dart';
 
 
-class CookingHistory extends StatefulWidget {
-  const CookingHistory({Key? key}) : super(key: key);
+
+class OnCHistory extends StatefulWidget {
+  const OnCHistory({Key? key}) : super(key: key);
 
   @override
-  State<CookingHistory> createState() => _CookingHistoryState();
+  State<OnCHistory> createState() => OnChistory();
 }
 
-class _CookingHistoryState extends State<CookingHistory> {
+class OnChistory extends State<OnCHistory> {
   int selectedIndex = 1;
 
   // final List<Map<String, dynamic>> historyList = [
@@ -45,23 +53,23 @@ class _CookingHistoryState extends State<CookingHistory> {
   @override
   Widget build(BuildContext context) {
 
-    final List<HistoryCommonCard> CookingHistoryList = [
-      HistoryCommonCard(
-        title: 'Spaghetti Carbonara',
+    final List<OnCHistoryCommonCard> OnCHistoryList = [
+      OnCHistoryCommonCard(
+        title: 'Toilets',area: "Back Office",
         description: 'Used for baking cheesecakes, roasting meats, and broiling French onion soup...',
-        temp: '23°C',
+
         date: DateTime(2025, 3, 25, 8, 30),
       ),
-      HistoryCommonCard(
-        title: 'Grilled Salmon with Lemon Butter',
+      OnCHistoryCommonCard(
+        title: 'Floor',area: "Washroom",
         description: 'Used for baking cheesecakes, roasting meats, and broiling French onion soup...',
-        temp: '23°C',
+
         date: DateTime(2025, 3, 26, 9, 30),
       ),
-      HistoryCommonCard(
-        title: 'Chicken Teriyaki',
+      OnCHistoryCommonCard(
+        title: 'Prep Tables',area: "Kitchen",
         description: 'Used for baking cheesecakes, roasting meats, and broiling French onion soup...',
-        temp: '23°C',
+
         date: DateTime(2025, 3, 27, 10, 0),
       ),
     ];
@@ -95,27 +103,13 @@ class _CookingHistoryState extends State<CookingHistory> {
                 ),
                 Spacer(),
                 commonText(
-                  text: 'Cooking History',
+                  text: 'Opening & Closing Checks ',
                   txtSize: 20,
                   color: black,
                   fontWeight: FontWeight.w600,
                 ),
                 Spacer(),
-                InkWell(
-                  borderRadius: BorderRadius.circular(14),
-                  onTap: () async {
-                    await CommonFilterModal(context: context);
-                  },
-                  child: Container(
-                    height: 28,
-                    width: 28,
-                    child: SvgPicture.asset(
-                      Assets.iconsFilter,
-                      height: 24,
-                      width: 24,
-                    ),
-                  ),
-                ),
+
               ],
             ),
           ),
@@ -124,11 +118,11 @@ class _CookingHistoryState extends State<CookingHistory> {
           Expanded(
             child: ListView.builder(
               padding: const EdgeInsets.symmetric(horizontal: 12),
-              itemCount: CookingHistoryList.length,
+              itemCount: OnCHistoryList.length,
               itemBuilder: (context, index) {
-                final card = CookingHistoryList[index];
-                return  commonCardForHistory(HistoryCommonCard(title: card.title, description: card.description,
-                    temp: card.temp, date: card.date));
+                final card = OnCHistoryList[index];
+                return  OnCcommonCardForHistory(OnCHistoryCommonCard(title: card.title,
+                    date: card.date,area: card.area,description: card.description));
                 // commonCardForSubFragmentPage(
                 //   HistoryCommonCard(
                 //     imagePath: card.imagePath,
@@ -158,4 +152,116 @@ class _CookingHistoryState extends State<CookingHistory> {
       ),
     );
   }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class OnCHistoryCommonCard {
+  final String title;
+  final String area;
+  final String description;
+
+
+  final DateTime date;
+  final VoidCallback? onTap;
+
+  OnCHistoryCommonCard({
+    required this.title,
+    required this.area,
+    required this.description,
+
+
+    required this.date,
+    this.onTap,
+  });
+}
+
+
+
+Widget OnCcommonCardForHistory(OnCHistoryCommonCard item) {
+  return GestureDetector(
+    onTap: item.onTap,
+    child: Padding(
+      padding: const EdgeInsets.only(bottom: 12),
+      child: Container(
+        decoration: BoxDecoration(
+          color: black.withOpacity(0.02),
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: black.withOpacity(0.06),
+            width: 1,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: litegray.withOpacity(0.5),
+              blurRadius: 4,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+
+            // commonText(
+            //   text: item.title,
+            //   txtSize: 16,
+            //   color: black,
+            //   fontWeight: FontWeight.w600,
+            // ),
+            commonText(
+                text: item.description.length > 45
+                    ? '${item.description.substring(0, 45)}...'
+                    : item.description,
+                txtSize: 14,
+              color: black
+            ),
+
+            // const SizedBox(height: 4+8+4),
+            // Row(children:[ SvgPicture.asset(Assets.iconsLocation),
+            //   commonText(text: "  Location: ", txtSize: 12,fontWeight: FontWeight.w600,color: graycol),
+            //   commonText(text: item.area, txtSize: 12,fontWeight: FontWeight.w600,color: green)
+            //
+            //
+            //
+            // ]),
+            const SizedBox(height: 8+4),
+            Row(
+              children: [
+                SvgPicture.asset(
+                  'assets/icons/calendar.svg',
+                  height: 18,
+                  width: 18,
+                ),
+                const SizedBox(width: 8),
+                commonText(
+                  text: DateFormat('dd-MMM-yyyy, hh:mm a').format(item.date),
+                  txtSize: 13,
+                  color: graycol,
+                  fontWeight: FontWeight.w500,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
 }

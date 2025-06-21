@@ -8,6 +8,7 @@ import '../../../../core/Constrants/color.dart';
 import '../../../../utils/navigator.dart';
 import '../../../widget/text.dart';
 import 'add cooking/add_cooking.dart';
+import 'cooking_history.dart';
 
 class CookingMainScreen extends StatefulWidget {
   @override
@@ -16,28 +17,17 @@ class CookingMainScreen extends StatefulWidget {
 
 class cookingScreen extends State<CookingMainScreen> {
   // Dynamic list for cooking cards
-  List<fragmentCommCard> _cookingCards = [];
+  List<fragmentCommCard> cookingCardsList = [fragmentCommCard(imagePath: 'assets/images/bydefault_user.jpg', titalText: 'Nova', subText: 'Cook spaghetti in boiling water (100°C). In a pan, cook pancetta until crispy (medium heat, 160°C). Mix eggs, parmesan, and black pepper, then combine with hot pasta off the heat. Stir quickly to create a creamy sauce. Serve with extra cheese.', temp: '20'),
 
-  @override
-  void initState() {
-    super.initState();
-    // Insert initial cards for testing
-    _cookingCards.addAll([
-      fragmentCommCard(
-        imagePath: 'assets/images/bydefault_user.jpg',
-        titalText: 'delam',
-        subText: 'nn',
-        temp: '12',
-      ),
-      fragmentCommCard(
-        imagePath: 'assets/images/byDefaultFemaleUser.jpg',
-        titalText: 'delam',
-        subText:
-        'Cook spaghetti in boiling water (100°C). In a pan, cook pancetta until crispy (medium heat, 160°C). Mix eggs, parmesan, and black pepper, then combine with hot pasta off the heat. Stir quickly to create a creamy sauce. Serve with extra cheese.',
-        temp: '20',
-      ),
-    ]);
-  }
+    fragmentCommCard(
+      imagePath: 'assets/images/byDefaultFemaleUser.jpg',
+      titalText: 'delam',
+      subText:
+      'Cook spaghetti in boiling water (100°C). In a pan, cook pancetta until crispy (medium heat, 160°C). Mix eggs, parmesan, and black pepper, then combine with hot pasta off the heat. Stir quickly to create a creamy sauce. Serve with extra cheese.',
+      temp: '20',
+    ),
+  ];
+
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +71,10 @@ class cookingScreen extends State<CookingMainScreen> {
                           fontWeight: FontWeight.w600,
                         ),
                         Spacer(),
-                        SvgPicture.asset('assets/icons/history.svg'),
+                        GestureDetector(onTap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>CookingHistory()));
+                        },
+                            child: SvgPicture.asset('assets/icons/history.svg')),
                       ],
                     ),
                     SizedBox(height: 15),
@@ -99,9 +92,9 @@ class cookingScreen extends State<CookingMainScreen> {
                 mainAxisSpacing: 5,
                 childAspectRatio: 0.76, // Adjust as needed
               ),
-              itemCount: _cookingCards.length,
+              itemCount: cookingCardsList.length,
               itemBuilder: (context, index) {
-                final card = _cookingCards[index];
+                final card = cookingCardsList[index];
                 return commonCardForSubFragmentPage(
                   fragmentCommCard(
                     imagePath: card.imagePath,
@@ -121,7 +114,7 @@ class cookingScreen extends State<CookingMainScreen> {
                           ),
                         ),
                       );
-                    },
+                    } ,
                   ),
                 );
               },
@@ -137,7 +130,7 @@ class cookingScreen extends State<CookingMainScreen> {
           );
           if (result != null && result is fragmentCommCard) {
             setState(() {
-              _cookingCards.add(result);
+              cookingCardsList.add(result);
             });
           }
         },

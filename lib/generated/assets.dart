@@ -5,6 +5,7 @@ class Assets {
   static const String assetsImagesReporter1 = 'assets/images/reporter_1.svg';
   static const String iconsAddButton = 'assets/icons/add_button.svg';
   static const String iconsArrowSync = 'assets/icons/arrow_sync.svg';
+  static const String iconsCalanderIcon = 'assets/icons/calanderIcon.svg';
   static const String iconsCalendar = 'assets/icons/calendar.svg';
   static const String iconsChangePassword = 'assets/icons/changePassword.svg';
   static const String iconsChilling = 'assets/icons/chilling.svg';
@@ -19,6 +20,7 @@ class Assets {
   static const String iconsEditMaintanance = 'assets/icons/edit_maintanance.svg';
   static const String iconsEditPencil = 'assets/icons/Edit_pencil.svg';
   static const String iconsExport = 'assets/icons/Export.svg';
+  static const String iconsFilter = 'assets/icons/filter.svg';
   static const String iconsHistory = 'assets/icons/history.svg';
   static const String iconsHome = 'assets/icons/home.svg';
   static const String iconsHotHolding = 'assets/icons/hot_holding.svg';
@@ -58,5 +60,6 @@ class Assets {
   static const String imagesSplashScreen = 'assets/images/Splash_Screen.svg';
   static const String imagesTheNLogo = 'assets/images/the_N_logo.png';
   static const String imagesUserAvtar = 'assets/images/userAvtar.jpg';
+  static const String imagesWomanFridge = 'assets/images/woman_fridge.jpg';
 
 }

@@ -6,6 +6,7 @@ import 'package:food_checker/screens/widget/card.dart';
 import '../../../../core/Constrants/color.dart';
 import '../../../../utils/navigator.dart';
 import '../../../widget/text.dart';
+import 'hot_holding_history.dart';
 import 'hotholding_details.dart';
 
 class HotHoldingMainscreen extends StatefulWidget{
@@ -21,6 +22,9 @@ class hotholdingMainScreen extends State<HotHoldingMainscreen>{
 
   @override
   Widget build(BuildContext context) {
+
+
+    List<fragmentCommCard> hotHoldingCardList = [fragmentCommCard(imagePath: 'assets/images/bydefault_user.jpg', titalText: 'oven', subText: "An oven is a kitchen appliance used for baking, roasting, and heating food. It operates by generating and maintaining heat within an enclosed space, ensuring even cooking. Ovens can be powered by electricity, gas, or even wood in traditional setups.", temp: '12')] ;
 
     List<Map<String, String>> hotHolding = [
       {
@@ -68,7 +72,10 @@ class hotholdingMainScreen extends State<HotHoldingMainscreen>{
                     ),
                     commonText(text: "Hot Holding", txtSize: 20, color: black, fontWeight: FontWeight.w600,),
                     Spacer(),
-                    SvgPicture.asset('assets/icons/history.svg', ),
+                    GestureDetector(onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> HotHoldingHistory()));
+                    },
+                        child: SvgPicture.asset('assets/icons/history.svg', )),
 
                   ]),
                   SizedBox(height: 15),
@@ -89,22 +96,29 @@ class hotholdingMainScreen extends State<HotHoldingMainscreen>{
               mainAxisSpacing: 5,
               childAspectRatio: 0.76, // Adjust as needed
             ),
-            itemCount: hotHolding.length,
+            itemCount: hotHoldingCardList.length,
             itemBuilder: (context, index) {
-              final itemData = hotHolding[index];
+              final card = hotHoldingCardList[index];
               return commonCardForSubFragmentPage(
                 fragmentCommCard(
-                  titalText: itemData["title"]!,
-                  subText: itemData["description"]!,
-                  imagePath: itemData["image"]!,
-                  temp: itemData["temp"]!,
+                  imagePath: card.imagePath,
+                  titalText: card.titalText,
+                  subText: card.subText,
+                  temp: card.temp,
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>hotholding_detail()));
-                  },
-                  // onTap: Navigate_helper.navigationCallback(
-                  //   context,
-                  //   'hotholding',
-                  // ),
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder:
+                            (context) => Hotholding_detail(
+                          tital: card.titalText,
+                          description: card.subText,
+                          imagePath: card.imagePath,
+                          temperature: card.temp,
+                        ),
+                      ),
+                    );
+                  } ,
                 ),
               );
             },

@@ -8,6 +8,7 @@ import 'dart:io';
 
 import '../../core/Constrants/color.dart';
 import '../fragment_screen/home/home_screen2.dart';
+import '../fragment_screen/reports/report_in_details.dart';
 import '../fragment_screen/staff/staff_screen.dart';
 import 'common_button.dart' show commonButton;
 
@@ -21,7 +22,6 @@ class HomeItem {
 
   HomeItem({required this.iconPath, required this.text, this.onTap});
 }
-
 Widget commonCardHomePage(HomeItem item) {
   return GestureDetector(
     onTap: item.onTap,
@@ -53,179 +53,217 @@ Widget commonCardHomePage(HomeItem item) {
   );
 }
 
-class ReportCard extends StatelessWidget {
+
+
+
+
+
+
+
+
+
+
+class ReportCardModel {
   final String reportTitle;
   final String reportDetail;
   final String taskText;
   final String reporterName;
   final String userAvatarPath; // optional
+  final VoidCallback? onTap;
 
-  const ReportCard({
-    super.key,
+  const ReportCardModel({
     required this.reportTitle,
     required this.reportDetail,
     required this.taskText,
     required this.reporterName,
     required this.userAvatarPath,
+    this.onTap,
   });
+}
+
+class ReportCardWidget extends StatelessWidget {
+  final ReportCardModel data;
+
+  const ReportCardWidget({Key? key, required this.data}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
 
-    return Card(
-      elevation: 5,
-      color: whiteColor,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                commonText(
-                  text: "Report :  ",
-                  txtSize: 18,
-                  color: greenColor,
-                  fontWeight: FontWeight.w600,
-                ),
-                Expanded(
-                  child: commonText(
-                    text: reportTitle,
+    return GestureDetector(
+      onTap:
+      data.onTap ??
+              () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ReportScreen_details(data: data),
+              ),
+            );
+          },
+      child: Card(
+        elevation: 5,
+        color: whiteColor,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  commonText(
+                    text: "Report :  ",
                     txtSize: 18,
+                    color: greenColor,
                     fontWeight: FontWeight.w600,
+                  ),
+                  Expanded(
+                    child: commonText(
+                      text: data.reportTitle,
+                      txtSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: black,
+                    ),
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 12, bottom: 20),
+                child: commonText(text: data.reportDetail, txtSize: 14),
+              ),
+              commonText(text: "Task", txtSize: 14),
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                    top: 12,
+                    bottom: 12,
+                    left: 8,
+                    right: 8,
+                  ),
+                  child: commonText(
+                    text: data.taskText,
+                    txtSize: 14,
                     color: black,
                   ),
                 ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 12, bottom: 20),
-              child: commonText(text: reportDetail, txtSize: 14),
-            ),
-            commonText(text: "Task", txtSize: 14),
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.only(
-                  top: 12,
-                  bottom: 12,
-                  left: 8,
-                  right: 8,
-                ),
-                child: commonText(text: taskText, txtSize: 14, color: black),
               ),
-            ),
-            SizedBox(
-              width: screenWidth * 0.501,
-              child: Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(50),
-                ),
+              SizedBox(
+                width: screenWidth * 0.501,
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50),
+                  ),
 
-                margin: const EdgeInsets.only(top: 16, bottom: 16),
+                  margin: const EdgeInsets.only(top: 16, bottom: 16),
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          top: 4,
+                          bottom: 4,
+                          left: 4,
+                          right: 6,
+                        ),
+                        child: CircleAvatar(
+                          child: Image.asset(data.userAvatarPath),
+                        ),
+                      ),
+                      Expanded(
+                        child: commonText(
+                          text: data.reporterName,
+                          txtSize: 14,
+                          color: black,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  color: litegray,
+                ),
+                child: TextField(
+                  decoration: InputDecoration(
+                    hintText: "Comment",
+                    hintStyle: const TextStyle(
+                      color: graycol,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14,
+                    ),
+                    suffixIcon: Padding(
+                      padding: const EdgeInsets.only(
+                        left: 10,
+                        top: 10,
+                        bottom: 10,
+                        right: 20,
+                      ),
+                      child: SvgPicture.asset(
+                        'assets/icons/send_arrow.svg',
+                        width: 24,
+                        height: 24,
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: const BorderSide(color: Colors.transparent),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: const BorderSide(
+                        color: greenColor,
+                        width: 2.0,
+                      ),
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 24, bottom: 20),
                 child: Row(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        top: 4,
-                        bottom: 4,
-                        left: 4,
-                        right: 6,
+                    SizedBox(
+                      height: 50,
+                      width: screenWidth * 0.397,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: greenColor, width: 2.0),
+                          borderRadius: BorderRadius.circular(20),
+                          color: greenColor.withOpacity(0.1),
+                        ),
+                        child: Center(
+                          child: commonText(
+                            text: "Checking",
+                            txtSize: 16,
+                            color: greenColor,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
                       ),
-                      child: CircleAvatar(child: Image.asset(userAvatarPath)),
                     ),
-                    Expanded(
-                      child: commonText(
-                        text: reporterName,
-                        txtSize: 14,
-                        color: black,
+                    const SizedBox(width: 10),
+                    SizedBox(
+                      height: 50,
+                      width: screenWidth * 0.397,
+                      child: commonButton(
+                        text: "Resolve",
+                        textColor: whiteColor,
+                        txtSize: 16,
+                        buttonShape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
                       ),
                     ),
                   ],
                 ),
               ),
-            ),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                color: litegray,
-              ),
-              child: TextField(
-                decoration: InputDecoration(
-                  hintText: "Comment",
-                  hintStyle: const TextStyle(
-                    color: graycol,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14,
-                  ),
-                  suffixIcon: Padding(
-                    padding: const EdgeInsets.only(
-                      left: 10,
-                      top: 10,
-                      bottom: 10,
-                      right: 20,
-                    ),
-                    child: SvgPicture.asset(
-                      'assets/icons/send_arrow.svg',
-                      width: 24,
-                      height: 24,
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: const BorderSide(color: Colors.transparent),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: const BorderSide(color: greenColor, width: 2.0),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 24, bottom: 20),
-              child: Row(
-                children: [
-                  SizedBox(
-                    height: 50,
-                    width: screenWidth * 0.397,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: greenColor, width: 2.0),
-                        borderRadius: BorderRadius.circular(20),
-                        color: greenColor.withOpacity(0.1),
-                      ),
-                      child: Center(
-                        child: commonText(
-                          text: "Checking",
-                          txtSize: 16,
-                          color: greenColor,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  SizedBox(
-                    height: 50,
-                    width: screenWidth * 0.397,
-                    child: commonButton(
-                      text: "Resolve",
-                      textColor: whiteColor,
-                      txtSize: 16,
-                      buttonShape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -394,79 +432,101 @@ Widget commonCardForSubFragmentPage(fragmentCommCard item) {
 
 
 
-Widget commonCardForHistory({
-  required String title,
-  required String description,
-  required String temp,
-  required DateTime date,
-  required bool isSelected,
-  required VoidCallback onTap,
-}) {
+class HistoryCommonCard {
+  final String title;
+  final String description;
+  final String temp;
+  final DateTime date;
+  final VoidCallback? onTap;
+
+  HistoryCommonCard({
+    required this.title,
+    required this.description,
+    required this.temp,
+    required this.date,
+    this.onTap,
+  });
+}
+
+
+
+Widget commonCardForHistory(HistoryCommonCard item) {
   return GestureDetector(
-    onTap: onTap,
-    child: Container(
-      decoration: BoxDecoration(
-        color: black.withOpacity(0.02),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: black.withOpacity(0.06),
-          width: 1,
+    onTap: item.onTap,
+    child: Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: Container(
+        decoration: BoxDecoration(
+          color: black.withOpacity(0.02),
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: black.withOpacity(0.06),
+            width: 1,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: litegray.withOpacity(0.5),
+              blurRadius: 4,
+              offset: const Offset(0, 2),
+            ),
+          ],
         ),
-        boxShadow: [
-          BoxShadow(
-            color: litegray.withOpacity(0.5),
-            blurRadius: 4,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          commonText(
-            text: title,
-            txtSize: 16,
-            color: black,
-            fontWeight: FontWeight.w600,
-          ),
-          const SizedBox(height: 4),
-          commonText(
-              text: description.length > 77
-                  ? '${description.substring(0, 78)}...'
-                  : description,
-              txtSize: 15
-          ),
-          const SizedBox(height: 8),
-          Row(
-            children: [
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+
               commonText(
-                text: 'Temp.: ',
-                txtSize: 14,
-                fontWeight: FontWeight.w500,
+                text: item.title!,
+                txtSize: 16,
+                color: black,
+                fontWeight: FontWeight.w600,
               ),
-              commonText(
-                text: temp,
-                txtSize: 14,
-                color: greenColor,
-                fontWeight: FontWeight.w500,
-              ),
-              const SizedBox(width: 24),
-              SvgPicture.asset(
-                'assets/icons/calendar.svg',
-                height: 18,
-                width: 18,
-              ),
-              const SizedBox(width: 8),
-              commonText(
-                text: DateFormat('dd-MMM-yyyy, hh:mm a').format(date),
-                txtSize: 13,
-                color: graycol,
-                fontWeight: FontWeight.w500,
-              ),
-            ],
-          ),
-        ],
+            // if (item.title != null)
+            //   commonText(
+            //     text: item.title!,
+            //     txtSize: 16,
+            //     color: black,
+            //     fontWeight: FontWeight.w600,
+            //   ),
+            const SizedBox(height: 4),
+            commonText(
+                text: item.description.length > 77
+                    ? '${item.description.substring(0, 78)}...'
+                    : item.description,
+                txtSize: 15
+            ),
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                commonText(
+                  text: 'Temp.: ',
+                  txtSize: 14,
+                  fontWeight: FontWeight.w600,
+                ),
+                commonText(
+                  text: item.temp,
+                  txtSize: 14,
+                  color: greenColor,
+                  fontWeight: FontWeight.w600,
+                ),
+                const SizedBox(width: 24),
+                SvgPicture.asset(
+                  'assets/icons/calendar.svg',
+                  height: 18,
+                  width: 18,
+                ),
+                const SizedBox(width: 8),
+                commonText(
+                  text: DateFormat('dd-MMM-yyyy, hh:mm a').format(item.date),
+                  txtSize: 13,
+                  color: graycol,
+                  fontWeight: FontWeight.w500,
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     ),
   );

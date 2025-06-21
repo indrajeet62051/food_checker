@@ -98,7 +98,11 @@ class CookingDetails extends StatelessWidget{
                               border: Border.all(color: black.withOpacity(0.06),width: 1)
         
                             ),
-                            child: Center(child: commonText(text: temperature, txtSize: 14,color: whiteColor,fontWeight: FontWeight.w600),),)
+                            child: Center(child:
+                            Row(mainAxisAlignment: MainAxisAlignment.center,
+                                children: [commonText(text: temperature, txtSize: 14,color: whiteColor,fontWeight: FontWeight.w600),
+                                  commonText(text: "°C", txtSize: 14,color: whiteColor,fontWeight: FontWeight.w600)
+                                ]),),)
                           ],),
                         ),
         

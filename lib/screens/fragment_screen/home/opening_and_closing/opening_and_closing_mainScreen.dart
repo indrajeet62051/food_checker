@@ -5,6 +5,7 @@ import 'package:food_checker/screens/widget/card.dart';
 
 import '../../../../core/Constrants/color.dart';
 import '../../../widget/text.dart';
+import 'opening_and_closing_History.dart';
 
 class OpeningAndClosingMainscreen extends StatefulWidget{
   @override
@@ -42,7 +43,10 @@ class openingAndClosingMainscreen extends State<OpeningAndClosingMainscreen>{
                     ),
                     commonText(text: "Opening & Closing Checks ", txtSize: 20, color: black, fontWeight: FontWeight.w600,),
                     Spacer(),
-                    SvgPicture.asset('assets/icons/history.svg', ),
+                    GestureDetector(onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>OnCHistory()));
+                    },
+                        child: SvgPicture.asset('assets/icons/history.svg', )),
 
                   ]),
                   SizedBox(height: 15),

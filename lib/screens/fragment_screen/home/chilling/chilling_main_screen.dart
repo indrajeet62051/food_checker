@@ -7,6 +7,8 @@ import 'package:food_checker/screens/widget/card.dart';
 import '../../../../core/Constrants/color.dart';
 import '../../../../utils/navigator.dart';
 import '../../../widget/text.dart';
+import '../cooking/cooking_history.dart';
+import 'chilling_history.dart';
 
 class ChillingMainScreen extends StatefulWidget{
   @override
@@ -21,20 +23,26 @@ class chillingMainScreen extends State<ChillingMainScreen>{
 
   @override
   Widget build(BuildContext context) {
-    List<Map<String, String>> data = [
-      {
-        "title": "delam",
-        "description": "nn",
-        "image": "assets/images/bydefault_user.jpg",
-        "temp": "12"
-      },
-      {
-        "title": "delam",
-        "description": "ned jnr",
-        "image": "assets/images/bydefault_user.jpg",
-        "temp": "12"
-      },
-    ];
+    
+    List<fragmentCommCard> chillingCardList =[
+      fragmentCommCard(imagePath: "assets/images/bydefault_user.jpg", titalText: "delam", subText: "nm", temp: "25")
+    ]   ;  
+    
+    
+    // List<Map<String, String>> data = [
+    //   {
+    //     "title": "delam",
+    //     "description": "nn",
+    //     "image": "assets/images/bydefault_user.jpg",
+    //     "temp": "12"
+    //   },
+    //   {
+    //     "title": "delam",
+    //     "description": "ned jnr",
+    //     "image": "assets/images/bydefault_user.jpg",
+    //     "temp": "12"
+    //   },
+    // ];
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -59,7 +67,10 @@ class chillingMainScreen extends State<ChillingMainScreen>{
                   ),
                   commonText(text: "Chilling", txtSize: 20, color: black, fontWeight: FontWeight.w600,),
                   Spacer(),
-                  SvgPicture.asset('assets/icons/history.svg', ),
+                  GestureDetector(onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>ChillingHistory()));
+                  },
+                      child: SvgPicture.asset('assets/icons/history.svg', )),
 
                 ]),
                 SizedBox(height: 15),
@@ -80,17 +91,23 @@ class chillingMainScreen extends State<ChillingMainScreen>{
             mainAxisSpacing: 5,
             childAspectRatio: 0.76,
           ),
-          itemCount: data.length,
+          itemCount: chillingCardList.length,
           itemBuilder: (context, index) {
-            final itemData = data[index];
+            final card = chillingCardList[index];
             return commonCardForSubFragmentPage(
               fragmentCommCard(
-                titalText: itemData["title"]!,
-                subText: itemData["description"]!,
-                imagePath: itemData["image"]!,
-                temp: itemData["temp"]!,
+                titalText: card.titalText,
+                subText: card.subText,
+                imagePath: card.imagePath,
+                temp: card.temp,
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>chilling_detail()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ChillingDetails(
+                    title: card.titalText,
+                    description: card.subText,
+                    imagePath: card.imagePath,
+                    temperature: card.temp,
+
+                  )));
                 },
                 // onTap: Navigate_helper.navigationCallback(
                 //   context,

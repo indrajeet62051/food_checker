@@ -13,11 +13,12 @@ import 'package:food_checker/screens/fragment_screen/home/cooking/cooking_detail
 import 'package:food_checker/screens/fragment_screen/home/home_screen.dart';
 import 'package:food_checker/screens/fragment_screen/home/maintenance/maintenance_main_screen.dart';
 import 'package:food_checker/screens/fragment_screen/profile/profile_screen2.dart';
+import 'package:food_checker/screens/fragment_screen/reports/report_in_details.dart';
 import 'package:food_checker/screens/fragment_screen/staff/Add_staff/add_staff.dart';
 import 'package:food_checker/screens/spash_screen/spash_screen.dart';
 
 
-void main() => runApp(MaterialApp(debugShowCheckedModeBanner: false, home: Signin(),
+void main() => runApp(MaterialApp(debugShowCheckedModeBanner: false, home: into_screen(),
 // initialRoute: '/',
 // routes: {
 // '/': (context) => SplashScreen(),

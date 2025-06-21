@@ -5,6 +5,7 @@ import 'package:food_checker/screens/widget/card.dart';
 
 import '../../../../core/Constrants/color.dart';
 import '../../../widget/text.dart';
+import 'maintenance_history.dart';
 
 class MaintenanceMainScreen extends StatefulWidget{
   @override
@@ -43,11 +44,18 @@ class maintenanceMainScreen extends State<MaintenanceMainScreen>{
               children: [
                 Row(children: [
                   Padding(
-                    padding: const EdgeInsets.only(right: 105),
+                    padding: const EdgeInsets.only(right: 0),
                     child: GestureDetector(onTap: (){Navigator.pop(context );},
                         child: Icon(Icons.arrow_back)),
                   ),
+                  Spacer(),
                   commonText(text: "Maintenance", txtSize: 20, color: black, fontWeight: FontWeight.w600,),
+                  Spacer(),
+                  GestureDetector(onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=> MaintenanceHistory()));
+                  },
+                      child: SvgPicture.asset('assets/icons/history.svg', )),
+
                 ]),
                 SizedBox(height: 15),
               ],

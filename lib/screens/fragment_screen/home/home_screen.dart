@@ -12,6 +12,7 @@ import 'cleaning_schedule/cleaning_schedule_main_screen.dart';
 import 'cooking/cooking_main_screen.dart';
 import 'hot_holding/hot_holding_mainScreen.dart';
 import 'maintenance/maintenance_main_screen.dart';
+import 'notification.dart';
 import 'opening_and_closing/opening_and_closing_mainScreen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -120,7 +121,10 @@ class home_screen extends State<HomeScreen> {
                   Spacer(),
                   Padding(
                     padding: const EdgeInsets.only(right: 20),
-                    child: SvgPicture.asset('assets/icons/notification.svg'),
+                    child: GestureDetector(onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>Notification_screen()));
+                    },
+                        child: SvgPicture.asset('assets/icons/notification.svg')),
                   ),
                 ],
               ),
