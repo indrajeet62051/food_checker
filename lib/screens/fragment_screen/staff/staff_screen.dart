@@ -54,14 +54,13 @@ class _StaffScreenState extends State<StaffScreen> {
         itemCount: staffItems.length,
         padding: const EdgeInsets.symmetric(vertical: 24),
         itemBuilder: (context, index) {
+          final card = staffItems[index];
           return CommonStaffCard(
-            item: staffItems[index],
+            item: card,
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => const StaffDetailsScreen(
-
-                  ),
+                  builder: (context) => StaffDetailsScreen(staff: card),
                 ),
               );
             },

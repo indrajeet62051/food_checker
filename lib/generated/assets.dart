@@ -3,6 +3,7 @@ class Assets {
   Assets._();
 
   static const String assetsImagesReporter1 = 'assets/images/reporter_1.svg';
+  static const String iconsActivityLog = 'assets/icons/activityLog.svg';
   static const String iconsAddButton = 'assets/icons/add_button.svg';
   static const String iconsArrowSync = 'assets/icons/arrow_sync.svg';
   static const String iconsCalanderIcon = 'assets/icons/calanderIcon.svg';
