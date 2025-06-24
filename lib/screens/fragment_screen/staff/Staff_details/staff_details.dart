@@ -5,6 +5,8 @@ import 'package:food_checker/generated/assets.dart';
 import 'package:food_checker/screens/widget/text.dart';
 import 'package:food_checker/screens/widget/card.dart';
 
+import 'staff_activity_log.dart';
+
 class StaffDetailsScreen extends StatelessWidget {
   final StaffItem staff;
   const StaffDetailsScreen({super.key, required this.staff});
@@ -30,7 +32,14 @@ class StaffDetailsScreen extends StatelessWidget {
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 21.33),
-            child: SvgPicture.asset(Assets.iconsActivityLog, height: 26, width: 26),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>ActivityLog() ));
+              },
+              child: SizedBox(height: 26,width: 26,
+                  child: SvgPicture.asset(Assets.iconsActivityLog, )),
+            ),
+
           ),
         ],
       ),
@@ -109,16 +118,17 @@ class StaffDetailsScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(color: black.withOpacity(0.06)),
                     ),
-                    child: Row(
+                    child: Column(crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Icon(Icons.location_on, color: green),
-                        SizedBox(width: 8),
-                        commonText(
-                          text: staff.kitchen_Location,
-                          fontWeight: FontWeight.w600,
-                          txtSize: 16,
-                          color: black,
+                        Row(
+                          children: [
+                            Icon(Icons.location_on, color: green),
+                            SizedBox(width: 8),
+                            commonText(text: staff.kitchen_Location, fontWeight: FontWeight.w600, txtSize: 16, color: black,),
+                          ],
                         ),
+                        SizedBox(height: 12,),
+                        commonText(text: "2464 Royal Ln. Mesa, New Jersey 45463", txtSize: 12,fontWeight: FontWeight.w500)
                       ],
                     ),
                   ),

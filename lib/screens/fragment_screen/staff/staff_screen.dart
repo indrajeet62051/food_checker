@@ -6,7 +6,7 @@ import 'package:food_checker/screens/widget/text.dart';
 
 import '../../widget/card.dart';
 import 'Add_staff/add_staff.dart';
-import 'staff_details.dart';
+import 'Staff_details/staff_details.dart';
 
 class StaffScreen extends StatefulWidget {
   const StaffScreen({super.key});

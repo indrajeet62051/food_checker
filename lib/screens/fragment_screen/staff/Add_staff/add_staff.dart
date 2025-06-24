@@ -68,6 +68,7 @@ class add_staff extends State<AddStaff> {
   void _addStaff() {
     if (_controller.isValid) {
       String selectedBranch = "";
+
       if (selectedBranchIndex == 0) selectedBranch = "Uttran";
       if (selectedBranchIndex == 1) selectedBranch = "Vesu";
       if (selectedBranchIndex == 2) selectedBranch = "Adajan";

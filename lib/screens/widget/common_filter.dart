@@ -15,9 +15,9 @@ Future<void> CommonFilterModal({required BuildContext context}) async {
     backgroundColor: Colors.transparent,
     builder: (context) {
       return DraggableScrollableSheet(
-        initialChildSize: 0.45,
+        initialChildSize: 0.4,
         minChildSize: 0.3,
-        maxChildSize: 0.7,
+        maxChildSize: 0.4,
         expand: false,
         builder: (context, scrollController) {
           return StatefulBuilder(
@@ -228,11 +228,10 @@ class FilterModalExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Filter Modal Example')),
       body: Center(
         child: ElevatedButton(
           onPressed: () => CommonFilterModal(context: context),
-          child: const Text('Open Filter Modal'),
+          child: const Text('Filter Modal'),
         ),
       ),
     );
