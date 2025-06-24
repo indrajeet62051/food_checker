@@ -23,7 +23,7 @@ class Hotholding_detail extends StatelessWidget{
     required this.description,
     required this.imagePath,
     required this.temperature,
-});
+  });
 
   // final String title;
   // final String description;
@@ -50,7 +50,7 @@ class Hotholding_detail extends StatelessWidget{
           Container(height: ScreenHeight,color: Colors.green,
             child: Column(children: [
               Container(height:ScreenHeight*0.588,width: ScreenWight,child:
-              Image.asset(imagePath,fit: BoxFit.cover,)
+              buildCardImage(imagePath,)
                 ,)
             ],),
           ),
@@ -92,7 +92,8 @@ class Hotholding_detail extends StatelessWidget{
                         child: commonText(text: tital, txtSize: 20,fontWeight: FontWeight.w600,color: black),
                       ),
 
-                      commonText(text: description, txtSize: 14),
+                      SizedBox(height: 125,
+                          child: commonText(text: description, txtSize: 14)),
 
                       Padding(
                         padding: const EdgeInsets.only(top:24,bottom: 24),
@@ -115,8 +116,8 @@ class Hotholding_detail extends StatelessWidget{
                                 ),
                                   child: Center(child: Row(mainAxisAlignment: MainAxisAlignment.center,
                                       children: [commonText(text: temperature, txtSize: 14,color: whiteColor,fontWeight: FontWeight.w600),
-                                    commonText(text: "°C", txtSize: 14,color: whiteColor,fontWeight: FontWeight.w600)
-                                  ]),),)
+
+                                      ]),),)
                               ],),
                             ),
 

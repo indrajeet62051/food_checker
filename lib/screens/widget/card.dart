@@ -417,12 +417,7 @@ Widget commonCardForSubFragmentPage(fragmentCommCard item) {
                   color: green,
                   fontWeight: FontWeight.w600,
                 ),
-                commonText(
-                  text: "°C",
-                  txtSize: 11,
-                  color: green,
-                  fontWeight: FontWeight.w600,
-                ),
+
               ],
             ),
           ],

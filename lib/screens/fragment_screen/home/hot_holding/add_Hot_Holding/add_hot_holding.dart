@@ -9,31 +9,39 @@ import '../../../../../core/Constrants/color.dart';
 import '../../../../../generated/assets.dart';
 import '../../../../widget/card.dart';
 import '../../../../widget/text.dart';
-import 'add_cooking_controller.dart';
+import 'add_hot_holding_controller.dart';
 
-class AddCooking extends StatefulWidget {
+class AddHotHolding extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => addCooking();
+  State<StatefulWidget> createState() => _AddHotHoldingState();
 }
 
-List<String> temperature = ["18", "19", "20", "21", "22"];
-late String Selected = temperature[2]; // Default to 20°C
-List<String> employees = [
-  "Nikhil Raj",
-  "Priya Sharma",
-  "Amit Kumar",
-  "Sara Lee",
-];
-late String selectedEmployee = employees[0]; // Default selection
+class _AddHotHoldingState extends State<AddHotHolding> {
+  late final AddHotHoldingController _controller;
+  List<String> temperature = ["25°C", "30°C", "35°C", "40°C", "45°C"];
+  late String Selected = temperature[2];
+  late String _selectedTemperature = temperature[0];
+  List<String> employees = [
+    "John Doe",
+    "Nikhil Raj",
+    "Priya Sharma",
+    "Amit Kumar",
+    "Sara Lee",
+  ];
+  late String _selectedEmployee = employees[0];
 
-class addCooking extends State<AddCooking> {
-  late final add_cooking_controller _controller;
+  @override
+  void initState() {
+    super.initState();
+    _controller = AddHotHoldingController();
+    _controller.temperature.text = _selectedTemperature;
+  }
 
-  Future<void> pickImage() async {
+  Future<void> _pickImage() async {
     showModalBottomSheet(
       context: context,
       builder:
-          (BuildContext) => SafeArea(
+          (BuildContext context) => SafeArea(
         child: Wrap(
           children: <Widget>[
             ListTile(
@@ -41,7 +49,7 @@ class addCooking extends State<AddCooking> {
               title: Text('Gallery'),
               onTap: () async {
                 Navigator.pop(context);
-                await _controller.PickedImage(ImageSource.gallery);
+                await _controller.pickImage(ImageSource.gallery);
                 setState(() {});
               },
             ),
@@ -50,7 +58,7 @@ class addCooking extends State<AddCooking> {
               title: Text("Camera"),
               onTap: () async {
                 Navigator.pop(context);
-                await _controller.PickedImage(ImageSource.camera);
+                await _controller.pickImage(ImageSource.camera);
                 setState(() {});
               },
             ),
@@ -60,31 +68,26 @@ class addCooking extends State<AddCooking> {
     );
   }
 
-  void addNewCooking() {
+  void _addNewHotHolding() {
     if (_controller.isValid) {
-      final newCooking = fragmentCommCard(
+      final newHotHolding = fragmentCommCard(
         imagePath:
-        _controller.UploadedImage != null
-            ? _controller.UploadedImage!.path
+        _controller.uploadedImage != null
+            ? _controller.uploadedImage!.path
             : Assets.imagesBydefaultUser,
-        subText: _controller.Recipe.text,
-        temp: _controller.Temperature.text,
-        titalText: _controller.DishName.text,
+        subText: _controller.recipe.text,
+        temp: _selectedTemperature,
+        titalText: _controller.title.text,
       );
-      Navigator.pop(context, newCooking);
+      Navigator.pop(context, newHotHolding);
     } else {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text("Fill All The Details Prpperly")));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Please fill all the details properly")),
+      );
     }
   }
 
   @override
-  void initState() {
-    super.initState();
-    _controller = add_cooking_controller();
-  }
-
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
@@ -112,14 +115,14 @@ class addCooking extends State<AddCooking> {
                     Row(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(right: 105),
+                          padding: const EdgeInsets.only(right: 70),
                           child: GestureDetector(
                             onTap: () => Navigator.pop(context),
                             child: Icon(Icons.arrow_back),
                           ),
                         ),
                         commonText(
-                          text: "Add Cooking",
+                          text: "Add Hot Holding",
                           txtSize: 20,
                           color: black,
                           fontWeight: FontWeight.w600,
@@ -140,7 +143,7 @@ class addCooking extends State<AddCooking> {
                   Padding(
                     padding: const EdgeInsets.only(top: 8, bottom: 16),
                     child: GestureDetector(
-                      onTap: pickImage,
+                      onTap: _pickImage,
                       child: DottedBorder(
                         color: green,
                         strokeWidth: 1.5,
@@ -155,7 +158,7 @@ class addCooking extends State<AddCooking> {
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child:
-                          _controller.UploadedImage == null
+                          _controller.uploadedImage == null
                               ? Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -186,7 +189,7 @@ class addCooking extends State<AddCooking> {
                               : ClipRRect(
                             borderRadius: BorderRadius.circular(12),
                             child: Image.file(
-                              _controller.UploadedImage!,
+                              _controller.uploadedImage!,
                               fit: BoxFit.cover,
                               width: double.infinity,
                             ),
@@ -196,12 +199,12 @@ class addCooking extends State<AddCooking> {
                     ),
                   ),
 
-                  commonText(text: "Dish Name", txtSize: 14),
+                  commonText(text: "Title", txtSize: 14),
                   Padding(
                     padding: const EdgeInsets.only(top: 8, bottom: 16),
                     child: commonTextField(
-                      hintText: "Didh Name0",
-                      controller: _controller.DishName,
+                      hintText: "Oven",
+                      controller: _controller.title,
                     ),
                   ),
                   commonText(text: "Recipe", txtSize: 14),
@@ -210,9 +213,9 @@ class addCooking extends State<AddCooking> {
                     child: SizedBox(
                       height: 120,
                       child: TextField(
-                        controller: _controller.Recipe,
-                        maxLines: 5, // important for multiline to work
-                        expands: false, // makes it fill the SizedBox height
+                        controller: _controller.recipe,
+                        maxLines: 5,
+                        expands: false,
                         decoration: InputDecoration(
                           hintText: "Enter Recipe",
                           border: OutlineInputBorder(
@@ -251,7 +254,7 @@ class addCooking extends State<AddCooking> {
                           child: Row(
                             children: [
                               Text(
-                                "$Selected°C",
+                                "$Selected",
                                 style: TextStyle(fontSize: 16),
                               ),
                               Spacer(),
@@ -263,16 +266,12 @@ class addCooking extends State<AddCooking> {
                     ),
                   ),
 
-                  // Temperature
+                  commonText(text: "Inspected By", txtSize: 14),
                   Padding(
-                    padding: const EdgeInsets.only(top: 16, bottom: 8),
-                    child: commonText(text: "Inspected By ", txtSize: 14),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 0),
+                    padding: const EdgeInsets.only(top: 8, bottom: 16),
                     child: Container(
                       height: 60,
-                      width: ScreenWight * 0.9069,
+                      width: double.infinity,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(color: black.withOpacity(0.5)),
@@ -281,17 +280,12 @@ class addCooking extends State<AddCooking> {
                         padding: const EdgeInsets.only(right: 16, left: 16),
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton<String>(
-                            value: selectedEmployee,
+                            value: _selectedEmployee,
                             isExpanded: true,
                             icon: Icon(Icons.arrow_downward),
-                            style: TextStyle(
-                              color: black,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                            ),
                             onChanged: (String? newValue) {
                               setState(() {
-                                selectedEmployee = newValue!;
+                                _selectedEmployee = newValue!;
                               });
                             },
                             items:
@@ -312,9 +306,13 @@ class addCooking extends State<AddCooking> {
                   SizedBox(height: 24),
                   SizedBox(
                     height: 60,
-                    width: ScreenWight * 0.9069,
-                    child: commonButton(text: "Add", onPress: addNewCooking),
+                    width: double.infinity,
+                    child: commonButton(
+                      text: "Add",
+                      onPress: _addNewHotHolding,
+                    ),
                   ),
+                  SizedBox(height: 24),
                 ],
               ),
             ),
@@ -323,6 +321,10 @@ class addCooking extends State<AddCooking> {
       ),
     );
   }
+
+
+
+
 
   Future<String?> _showTemperaturePicker(BuildContext context) async {
     int selectedIndex = temperature.indexOf(Selected);
@@ -416,7 +418,7 @@ class addCooking extends State<AddCooking> {
                       child: commonButton(
                         text: "Select",
                         onPress: () {
-                          _controller.Temperature.text =
+                          _controller.temperature.text =
                           temperature[selectedIndex];
                           Navigator.pop(context, temperature[selectedIndex]);
                         },
