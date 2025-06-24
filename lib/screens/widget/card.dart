@@ -9,6 +9,7 @@ import 'dart:io';
 import '../../core/Constrants/color.dart';
 import '../fragment_screen/home/home_screen2.dart';
 import '../fragment_screen/reports/report_in_details.dart';
+import '../fragment_screen/staff/editScrenen.dart';
 import '../fragment_screen/staff/staff_screen.dart';
 import 'common_button.dart' show commonButton;
 
@@ -230,18 +231,20 @@ class ReportCardWidget extends StatelessWidget {
                     SizedBox(
                       height: 50,
                       width: screenWidth * 0.397,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(color: greenColor, width: 2.0),
-                          borderRadius: BorderRadius.circular(20),
-                          color: greenColor.withOpacity(0.1),
-                        ),
-                        child: Center(
-                          child: commonText(
-                            text: "Checking",
-                            txtSize: 16,
-                            color: greenColor,
-                            fontWeight: FontWeight.w700,
+                      child: GestureDetector(onTap: () => editScreen(),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(color: greenColor, width: 2.0),
+                            borderRadius: BorderRadius.circular(20),
+                            color: greenColor.withOpacity(0.1),
+                          ),
+                          child: Center(
+                            child: commonText(
+                              text: "Closed",
+                              txtSize: 16,
+                              color: greenColor,
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
                         ),
                       ),
@@ -476,12 +479,12 @@ Widget commonCardForHistory(HistoryCommonCard item) {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
 
-              commonText(
-                text: item.title!,
-                txtSize: 16,
-                color: black,
-                fontWeight: FontWeight.w600,
-              ),
+            commonText(
+              text: item.title!,
+              txtSize: 16,
+              color: black,
+              fontWeight: FontWeight.w600,
+            ),
             // if (item.title != null)
             //   commonText(
             //     text: item.title!,
@@ -531,4 +534,173 @@ Widget commonCardForHistory(HistoryCommonCard item) {
     ),
   );
 }
+
+
+
+
+
+
+
+class StaffItem {
+  final String staffName;
+  final String designation;
+  final String allocation;
+  final String kitchen_Location;
+  final String image_path;
+
+  StaffItem({
+    required this.staffName,
+    required this.designation,
+    required this.allocation,
+    required this.kitchen_Location,
+    required this.image_path,
+  });
+}
+
+
+class CommonStaffCard extends StatelessWidget {
+  final StaffItem item;
+  final VoidCallback onTap;
+  final VoidCallback? onEditTap;
+  final VoidCallback? onDeleteTap;
+
+  const CommonStaffCard({
+    super.key,
+    required this.item,
+    required this.onTap,
+    this.onEditTap,
+    this.onDeleteTap,
+
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 15, right: 15),
+      child: GestureDetector(
+        onTap: onTap,
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width * 0.906,
+          height: 102,
+          child: Card(
+            margin: const EdgeInsets.only(bottom: 8),
+            child: Row(
+              children: [
+                _buildStaffImage(item),
+                _buildStaffDetails(item),
+                _buildActionButtons(),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildStaffImage(StaffItem item) {
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: SizedBox(
+        width: 70,
+        height: 70,
+        child: CircleAvatar(
+          backgroundColor: green,
+          child: SizedBox(
+            height: 67,
+            width: 67,
+            child: ClipOval(
+              child:
+              item.image_path.startsWith('assets/')
+                  ? Image.asset(item.image_path, fit: BoxFit.cover)
+                  : Image.file(File(item.image_path), fit: BoxFit.cover),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildStaffDetails(StaffItem item) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(bottom: 4),
+          child: Row(
+            children: [
+              commonText(
+                text: item.staffName,
+                txtSize: 14,
+                fontWeight: FontWeight.w600,
+                color: black,
+              ),
+              commonText(
+                text: " (",
+                txtSize: 14,
+                fontWeight: FontWeight.w600,
+                color: green,
+              ),
+              commonText(
+                text: item.designation,
+                txtSize: 14,
+                fontWeight: FontWeight.w600,
+                color: green,
+              ),
+              commonText(
+                text: ") ",
+                txtSize: 14,
+                fontWeight: FontWeight.w600,
+                color: green,
+              ),
+            ],
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 10),
+          child: commonText(text: item.allocation, txtSize: 12),
+        ),
+        Row(
+          children: [
+            SvgPicture.asset('assets/icons/location.svg'),
+            Padding(
+              padding: const EdgeInsets.only(left: 5.0),
+              child: commonText(
+                text: item.kitchen_Location,
+                txtSize: 12,
+                color: black,
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildActionButtons() {
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.only(right: 22),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            GestureDetector(
+              onTap: onEditTap,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 20),
+                child: GestureDetector( onTap: () => editScreen(),
+                    child: SvgPicture.asset('assets/icons/Edit.svg')),
+              ),
+            ),
+            GestureDetector(
+              onTap: onDeleteTap,
+              child: SvgPicture.asset('assets/icons/delete.svg'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 
