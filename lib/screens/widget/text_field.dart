@@ -7,11 +7,12 @@ Widget commonTextField({
   required String hintText,
   String? Svg_Path,
   TextEditingController? controller,
-  String? Function(String?)? validator, // <-- add this
+  String? Function(String?)? validator,
+  TextInputType? keyboardType
 }) {
   return TextFormField(
     controller: controller,
-    keyboardType: TextInputType.emailAddress,
+    keyboardType: keyboardType,
     validator: validator,
     decoration: InputDecoration(
       hintText: hintText,

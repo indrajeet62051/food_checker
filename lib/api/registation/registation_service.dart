@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 
-import 'add_user_post.dart';
+import '../data_mode_post.dart';
 
 class RegisterService {
   final String baseUrl =

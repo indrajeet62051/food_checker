@@ -12,14 +12,14 @@ class RegisterController {
     return emailRegex.hasMatch(email);
   }
 
-  bool get isValid =>
-      firstNameController.text.isNotEmpty &&
-      lastNameController.text.isNotEmpty &&
-      emailController.text.isNotEmpty &&
-      isValidEmail(emailController.text) &&
-      passwordController.text.isNotEmpty &&
-      confirmPasswordController.text.isNotEmpty &&
-      passwordController.text == confirmPasswordController.text;
+  // bool get isValid =>
+  //     firstNameController.text.isNotEmpty &&
+  //     lastNameController.text.isNotEmpty &&
+  //     emailController.text.isNotEmpty &&
+  //     isValidEmail(emailController.text) &&
+  //     passwordController.text.isNotEmpty &&
+  //     confirmPasswordController.text.isNotEmpty &&
+  //     passwordController.text == confirmPasswordController.text;
 
   String? validateInput() {
     if (firstNameController.text.isEmpty) {
@@ -37,10 +37,10 @@ class RegisterController {
     if (passwordController.text.isEmpty) {
       return 'Password is required';
     }
-    // final passwordRegex = RegExp(r'^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$');
-    // if (!passwordRegex.hasMatch(passwordController.text)) {
-    //   return "Password needs a capital, number, symbol, and be 6+ characters";
-    // }
+    final passwordRegex = RegExp(r'^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$');
+    if (!passwordRegex.hasMatch(passwordController.text)) {
+      return "Password needs a capital, number, symbol, and be 6+ characters";
+    }
     if (confirmPasswordController.text.isEmpty) {
       return 'Please confirm your password';
     }
