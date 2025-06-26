@@ -43,7 +43,7 @@ class CleaningDetails extends StatelessWidget{
           Container(height: ScreenHeight,color: Colors.green,
             child: Column(children: [
               Container(height:ScreenHeight*0.588,width: ScreenWight,child:
-              Image.asset(imagePath,fit: BoxFit.cover,)
+              buildCardImage(imagePath,)
                 ,)
             ],),
           ),

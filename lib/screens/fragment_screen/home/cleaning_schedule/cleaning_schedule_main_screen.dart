@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:food_checker/generated/assets.dart';
@@ -6,6 +8,8 @@ import 'package:food_checker/screens/widget/card.dart';
 
 import '../../../../core/Constrants/color.dart';
 import '../../../widget/text.dart';
+import '../hot_holding/add_Hot_Holding/add_hot_holding.dart';
+import 'Add Cleaning/add_cleaning.dart';
 import 'cleaning_details.dart';
 import 'cleaning_history.dart';
 
@@ -97,7 +101,16 @@ class cleaningScheduleMainScreen extends State<CleaningScheduleMainScreen>{
 
         ],),
       ),
-      floatingActionButton: FloatingActionButton(onPressed: (){
+      floatingActionButton: FloatingActionButton(onPressed: () async {
+        final result = await Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => AddCleaning()),
+        );
+        if (result != null && result is cleaningCard) {
+          setState(() {
+            cleaningCardList.add(result);
+          });
+        }
       },
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -114,6 +127,7 @@ class cleaningCard{
   final String allocation;
   final String shedule;
   final String area;
+  final String ? description;
   final VoidCallback ? navigator;
 
   cleaningCard({
@@ -123,8 +137,31 @@ class cleaningCard{
     required this.shedule,
     required this.area,
     this.navigator,
+    this.description,
 
 });
+}
+
+
+Widget buildCardImage(String imagePath,
+    {double ? height,}
+
+    ) {
+  if (imagePath.startsWith('assets/')) {
+    return Image.asset(
+      imagePath,
+      fit: BoxFit.cover,
+      width: double.infinity,
+      height: height,
+    );
+  } else {
+    return Image.file(
+      File(imagePath),
+      fit: BoxFit.cover,
+      width: double.infinity,
+      height: height,
+    );
+  }
 }
 
 Widget commonCardCleaningMain(cleaningCard item){
@@ -137,15 +174,12 @@ Widget commonCardCleaningMain(cleaningCard item){
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
+            SizedBox(
               height: 150,
               width: double.infinity,
-              decoration: BoxDecoration(
+              child: ClipRRect(
                 borderRadius: BorderRadius.circular(8),
-                image: DecorationImage(
-                  image: AssetImage(item.imagePath),
-                  fit: BoxFit.cover,
-                ),
+                child: buildCardImage(item.imagePath,),
               ),
             ),
             Padding(

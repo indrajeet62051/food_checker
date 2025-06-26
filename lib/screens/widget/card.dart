@@ -384,14 +384,7 @@ Widget commonCardForSubFragmentPage(fragmentCommCard item) {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              height: 150,
-              width: double.infinity,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: buildCardImage(item.imagePath,),
-              ),
-            ),
+
             Padding(
               padding: const EdgeInsets.only(top: 8, bottom: 0),
               child: commonText(
