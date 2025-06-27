@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:food_checker/screens/auth/sign_up/sign_up_controller.dart';
 import 'package:food_checker/screens/widget/common_button.dart';
 import 'package:food_checker/screens/widget/text.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../api/registation/registation_service.dart';
 import '../../../core/Constrants/color.dart';
 import '../../fragment_screen/fragment_screen.dart';
@@ -166,6 +167,12 @@ class Sign_up extends State<Signup> {
                               setState(() => isLoading = false);
 
                               if (user != null && user.status == 1) {
+
+                                final prefs = await SharedPreferences.getInstance();
+                                await prefs.setBool('isLoggedIn', true);
+                                await prefs.setString('fullName', user.data?.fullName ?? '');
+
+
                                 if (!mounted) return;
                                 Navigator.push(context, MaterialPageRoute(
                                     builder: (context) => FragmentScreen()));
