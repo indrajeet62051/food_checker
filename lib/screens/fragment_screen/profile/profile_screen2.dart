@@ -23,6 +23,25 @@ class ProfileScreen2 extends StatefulWidget {
 class Profile_screen extends State<ProfileScreen2> {
   bool isSwitch = true;
 
+
+  String fullName_ = 'Loading...'; // default text
+
+  @override
+  void initState() {
+    super.initState();
+    _loadFullName();
+  }
+
+  Future<void> _loadFullName() async {
+    final prefs = await SharedPreferences.getInstance();
+    final fullname = prefs.getString('fullName') ?? '';
+    // final lastName = prefs.getString('lastName') ?? '';
+    setState(() {
+      fullName_ = '$fullname';
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     final double ScreenWight = MediaQuery.of(context).size.width;
@@ -174,7 +193,7 @@ class Profile_screen extends State<ProfileScreen2> {
                 ),
               ),
               commonText(
-                text: "Brew & Bite",
+                text: fullName_,
                 txtSize: 20,
                 fontWeight: FontWeight.w700,
                 color: black,

@@ -210,43 +210,45 @@ class Login extends State<Signin> {
                           txtSize: 18,
                           context: context,
                           onPress: () async {
-                            final validationError =
-                                loginController.validateInput();
+                            final validationError = loginController.validateInput();
                             if (validationError != null) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(content: Text(validationError)),
                               );
                               return;
                             }
+
                             setState(() => isLoading = true);
                             final user = await LoginService().loginUser(
                               email: loginController.emailController.text,
                               password: loginController.passwordController.text,
                             );
                             setState(() => isLoading = false);
+
                             if (user != null && user.status == 1) {
-                              final prefs =
-                                  await SharedPreferences.getInstance();
+                              final prefs = await SharedPreferences.getInstance();
                               await prefs.setBool('isLoggedIn', true);
+                              await prefs.setString('fullName', user.data?.fullName ?? '');
+                              // await prefs.setString('lastName', user.data?.lastName ?? '');
+                              // Optional: Save full name or auth token if needed
+                              // await prefs.setString('authToken', user.data?.authToken ?? '');
+
                               if (!mounted) return;
                               Navigator.pushAndRemoveUntil(
                                 context,
-                                MaterialPageRoute(
-                                  builder: (context) => FragmentScreen(),
-                                ),
+                                MaterialPageRoute(builder: (context) => FragmentScreen()),
                                     (Route<dynamic> route) => false,
                               );
                             } else {
                               if (!mounted) return;
                               ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(user?.msg ?? "Login Fail"),
-                                ),
+                                SnackBar(content: Text(user?.msg ?? "Login Fail")),
                               );
                             }
                           },
                         ),
                       ),
+
                       SizedBox(height: 40),
                       Row(
                         children: [
