@@ -1,21 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:food_checker/screens/OnBoardingScreen/into_screen.dart';
-import 'package:food_checker/screens/auth/login/login.dart';
-import 'package:food_checker/screens/auth/sign_up/sign_up.dart';
+import 'package:food_checker/screens/fragment_screen/fragment_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final prefs = await SharedPreferences.getInstance();
+  final bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+
+  runApp(MyApp(isLoggedIn: isLoggedIn));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool isLoggedIn;
 
-  // This widget is the root of your application.
+  const MyApp({Key? key, required this.isLoggedIn}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'Login Persistence Demo',
       debugShowCheckedModeBanner: false,
-      home:  into_screen(),
+      home: isLoggedIn ? FragmentScreen() : into_screen(),
     );
   }
 }
