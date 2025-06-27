@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:food_checker/screens/auth/login/login_controller.dart';
 import 'package:food_checker/screens/widget/common_button.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../api/login/logIn_Service.dart';
 import '../../../core/Constrants/color.dart';
 import '../../fragment_screen/fragment_screen.dart';
+import '../../fragment_screen/home/home_screen.dart';
 import '../forgot_password/forgot_password.dart';
 import '../sign_up/sign_up.dart';
 
@@ -21,6 +23,22 @@ class Signin extends StatefulWidget{
 }
 
 class Login extends State<Signin>{
+
+  Future<void> login(BuildContext context) async {
+    // Fake login
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('isLoggedIn', true);
+
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (_) => FragmentScreen()),
+          (route) => false,
+    );
+  }
+
+
+
+
   bool isLoading = false;
 
   late final LoginController loginController;

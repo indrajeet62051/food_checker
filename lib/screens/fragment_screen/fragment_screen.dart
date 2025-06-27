@@ -6,7 +6,9 @@ import 'package:food_checker/screens/fragment_screen/profile/profile_screen2.dar
 import 'package:food_checker/screens/fragment_screen/reports/report_screen2.dart';
 import 'package:food_checker/screens/fragment_screen/staff/staff_screen.dart';
 import 'package:food_checker/screens/widget/text.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../auth/login/login.dart';
 import 'home/home_screen.dart';
 import 'home/home_screen2.dart';
 
@@ -17,6 +19,20 @@ class FragmentScreen extends StatefulWidget {
 }
 
 class _FragmentExampleState extends State<FragmentScreen> {
+
+
+  Future<void> logout(BuildContext context) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.clear(); // or prefs.remove('isLoggedIn');
+
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (_) => Signin()),
+          (route) => false,
+    );
+  }
+
+
   int _currentIndex = 0;
 
   final List<Widget> _fragments = [
