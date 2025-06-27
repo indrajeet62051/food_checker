@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_checker/screens/OnBoardingScreen/into_screen.dart';
 import 'package:food_checker/screens/auth/login/login.dart';
 import 'package:food_checker/screens/auth/sign_up/sign_up.dart';
 
@@ -13,8 +14,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // debugShowCheckedModeBanner: false,
-      home:  Signin(),
+      debugShowCheckedModeBanner: false,
+      home:  into_screen(),
     );
   }
 }

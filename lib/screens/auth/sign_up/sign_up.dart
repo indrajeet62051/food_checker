@@ -6,6 +6,7 @@ import 'package:food_checker/screens/widget/common_button.dart';
 import 'package:food_checker/screens/widget/text.dart';
 import '../../../api/registation/registation_service.dart';
 import '../../../core/Constrants/color.dart';
+import '../../fragment_screen/fragment_screen.dart';
 import '../../widget/text_field.dart';
 import '../login/login.dart';
 
@@ -167,7 +168,7 @@ class Sign_up extends State<Signup> {
                               if (user != null && user.status == 1) {
                                 if (!mounted) return;
                                 Navigator.push(context, MaterialPageRoute(
-                                    builder: (context) => Signin()));
+                                    builder: (context) => FragmentScreen()));
                               } else {
                                 if (!mounted) return;
                                 ScaffoldMessenger.of(context).showSnackBar(
