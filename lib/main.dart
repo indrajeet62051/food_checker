@@ -19,8 +19,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Login Persistence Demo',
-      debugShowCheckedModeBanner: false,
+      // debugShowCheckedModeBanner: false,
       home: isLoggedIn ? FragmentScreen() : into_screen(),
     );
   }

@@ -12,26 +12,22 @@ import '../auth/login/login.dart';
 import 'home/home_screen.dart';
 import 'home/home_screen2.dart';
 
-
 class FragmentScreen extends StatefulWidget {
   @override
   _FragmentExampleState createState() => _FragmentExampleState();
 }
 
 class _FragmentExampleState extends State<FragmentScreen> {
-
-
   Future<void> logout(BuildContext context) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.clear(); // or prefs.remove('isLoggedIn');
-
+    await prefs.remove('isLoggedIn'); // Only remove the login flag
+    if (!context.mounted) return;
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(builder: (_) => Signin()),
-          (route) => false,
+      (route) => false,
     );
   }
-
 
   int _currentIndex = 0;
 
@@ -45,10 +41,7 @@ class _FragmentExampleState extends State<FragmentScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(
-        index: _currentIndex,
-        children: _fragments,
-      ),
+      body: IndexedStack(index: _currentIndex, children: _fragments),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: (index) {
@@ -57,38 +50,47 @@ class _FragmentExampleState extends State<FragmentScreen> {
           });
         },
         type: BottomNavigationBarType.fixed,
-        selectedLabelStyle: TextStyle(fontSize: 12,fontWeight: FontWeight.w700,color: Colors.green),
-        unselectedLabelStyle: TextStyle(fontSize: 10,fontWeight: FontWeight.w500,color: graycol,),
+        selectedLabelStyle: TextStyle(
+          fontSize: 12,
+          fontWeight: FontWeight.w700,
+          color: Colors.green,
+        ),
+        unselectedLabelStyle: TextStyle(
+          fontSize: 10,
+          fontWeight: FontWeight.w500,
+          color: graycol,
+        ),
         items: [
           BottomNavigationBarItem(
-            icon: SvgPicture.asset('assets/icons/home.svg',
-                color: _currentIndex == 0 ? greenColor : graycol),
+            icon: SvgPicture.asset(
+              'assets/icons/home.svg',
+              color: _currentIndex == 0 ? greenColor : graycol,
+            ),
             label: "Home",
           ),
           BottomNavigationBarItem(
-            icon: SvgPicture.asset('assets/icons/report.svg',
-                color: _currentIndex == 1 ? greenColor : graycol),
-            label:_currentIndex == 1 ? "Report" : "Report",
+            icon: SvgPicture.asset(
+              'assets/icons/report.svg',
+              color: _currentIndex == 1 ? greenColor : graycol,
+            ),
+            label: _currentIndex == 1 ? "Report" : "Report",
           ),
           BottomNavigationBarItem(
-            icon: SvgPicture.asset('assets/icons/staff.svg',
-                color: _currentIndex == 2 ? greenColor : graycol),
-            label: _currentIndex == 2 ? "Staff": "Staff",
+            icon: SvgPicture.asset(
+              'assets/icons/staff.svg',
+              color: _currentIndex == 2 ? greenColor : graycol,
+            ),
+            label: _currentIndex == 2 ? "Staff" : "Staff",
           ),
           BottomNavigationBarItem(
-            icon: SvgPicture.asset('assets/icons/profile.svg',
-                color: _currentIndex == 3 ? greenColor : graycol),
-            label:_currentIndex == 3 ? "Profile":"Profilr",
+            icon: SvgPicture.asset(
+              'assets/icons/profile.svg',
+              color: _currentIndex == 3 ? greenColor : graycol,
+            ),
+            label: _currentIndex == 3 ? "Profile" : "Profilr",
           ),
         ],
-      )
-      ,
+      ),
     );
   }
 }
-
-
-
-
-
-
