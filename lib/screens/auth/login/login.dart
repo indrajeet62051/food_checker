@@ -228,9 +228,9 @@ class Login extends State<Signin> {
                             if (user != null && user.status == 1) {
                               final prefs = await SharedPreferences.getInstance();
                               await prefs.setBool('isLoggedIn', true);
-                             // await prefs.setString('fullName', user.data?.fullName ?? '');
-                              // await prefs.setString('email', user.data?.email ?? '');
-                              // await prefs.setString('auth_token', user.data?.authToken ?? '');
+                             await prefs.setString('fullName', user.data?.fullName ?? '');
+                              await prefs.setString('email', user.data?.email ?? '');
+                              await prefs.setString('auth_token', user.data?.authToken ?? '');
                               // await prefs.setString('user_profile_photo', user.data?.userProfilePhoto ?? '');
 
 

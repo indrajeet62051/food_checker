@@ -23,9 +23,8 @@ class ProfileScreen2 extends StatefulWidget {
 class Profile_screen extends State<ProfileScreen2> {
   bool isSwitch = true;
 
-
   String fullName_ = 'Loading...';
-  String profilePicture_ ="";
+  String profilePicture_ = "";
 
   @override
   void initState() {
@@ -45,7 +44,6 @@ class Profile_screen extends State<ProfileScreen2> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     final double ScreenWight = MediaQuery.of(context).size.width;
@@ -54,16 +52,13 @@ class Profile_screen extends State<ProfileScreen2> {
       ProfileItem(
         imagePath: 'assets/icons/Edit_pencil.svg',
         rowText: 'Edit Profile',
-        onTap: ()  {
+        onTap: () {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => EditProfileScreen()),
-
-          ).then((_){
+          ).then((_) {
             _loaddata();
           });
-
-          
         },
       ),
       ProfileItem(
@@ -179,12 +174,14 @@ class Profile_screen extends State<ProfileScreen2> {
                       child: Center(
                         child: CircleAvatar(
                           radius: 56,
-                          backgroundImage: profilePicture_.isNotEmpty
-                              ? NetworkImage("https://codonnier.tech/flutterapp/food_hygine/app_images/profile_images/$profileImage_")
-                              : AssetImage('assets/images/bydefault_user.jpg') as ImageProvider,
+                          backgroundImage:
+                              profilePicture_.isNotEmpty
+                                  ? NetworkImage(profilePicture_)
+                                  : AssetImage(
+                                        'assets/images/bydefault_user.jpg',
+                                      )
+                                      as ImageProvider,
                         ),
-
-
                       ),
                     ),
                     Positioned(

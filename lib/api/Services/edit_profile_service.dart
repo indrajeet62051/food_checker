@@ -13,16 +13,23 @@ class EditProfileService {
   Future<User?> EditProfileUser({
     required String firstName,
     required String lastName,
-    required File profileimage,
+    File? profileimage,
   }) async {
     try {
       var request = http.MultipartRequest('POST', Uri.parse(baseUrl));
       request.fields['first_name'] = firstName;
       request.fields['last_name'] = lastName;
       //request.fields['auth_token'] = '300ffbcc68e36f99d07746c85af26e778ff2868d8a8384e404a8d0fde8f380865bd300';
-      request.files.add(
-        await http.MultipartFile.fromPath('profile_images', profileimage.path),
-      );
+
+      if (profileimage != null) {
+        request.files.add(
+          await http.MultipartFile.fromPath(
+            'profile_images',
+            profileimage.path,
+          ),
+        );
+      }
+
       request.headers.addAll({
         'Accept': 'application/json',
         'App-Track-Version': 'v1',
@@ -32,8 +39,7 @@ class EditProfileService {
         'App-Os-Version': 'iOS 11',
         'App-Store-Build-Number': '1.1',
         'App-Secret': 'FoodHygine@2025',
-        'Auth-Token':'$auth_Token_',
-
+        'Auth-Token': '$auth_Token_',
       });
 
       var streamedResponse = await request.send();

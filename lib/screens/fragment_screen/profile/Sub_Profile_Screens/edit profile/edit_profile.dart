@@ -7,6 +7,7 @@ import 'package:food_checker/screens/widget/common_button.dart';
 import 'package:food_checker/screens/widget/text_field.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:io';
 
 import '../../../../../core/Constrants/color.dart';
 import '../../../../widget/card.dart';
@@ -19,7 +20,7 @@ class EditProfileScreen extends StatefulWidget {
 
 String email_ = "";
 String auth_Token_ = "";
-String profileImage_ = '';
+String profileImage_ = "";
 
 class edit_screen extends State<EditProfileScreen> {
   late final EditProfileController controller;
@@ -36,7 +37,7 @@ class edit_screen extends State<EditProfileScreen> {
     final prefs = await SharedPreferences.getInstance();
     final email = prefs.getString('email') ?? '';
     final auth_token = prefs.getString('auth_token');
-    final profileImage = prefs.getString('userProfilePhoto');
+    final profileImage = prefs.getString('userProfilePhoto') ?? '';
     setState(() {
       email_ = '$email';
       auth_Token_ = '$auth_token';
@@ -117,9 +118,13 @@ class edit_screen extends State<EditProfileScreen> {
                                     controller.uploadedImage == null
                                         ? CircleAvatar(
                                           radius: 56,
-                                          backgroundImage: NetworkImage(
-                                            "https://codonnier.tech/flutterapp/food_hygine/app_images/profile_images/$profileImage_",
-                                          ),
+                                          backgroundImage:
+                                              profileImage_.isNotEmpty
+                                                  ? NetworkImage(profileImage_)
+                                                  : AssetImage(
+                                                        'assets/images/bydefault_user.jpg',
+                                                      )
+                                                      as ImageProvider,
                                         )
                                         : ClipOval(
                                           child: Image.file(
@@ -153,6 +158,20 @@ class edit_screen extends State<EditProfileScreen> {
                         ],
                       ),
                     ),
+                    SizedBox(height: 8),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Profile Picture (Optional)",
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontFamily: 'PlusJakartaSans',
+                          color: graycol,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 12),
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
@@ -196,7 +215,7 @@ class edit_screen extends State<EditProfileScreen> {
                       width: ScreenWight * 0.9069,
                       height: 60,
                       child: commonButton(
-                        text: "Save Changes",
+                        text: "Update Profile",
                         onPress: () async {
                           String fullName =
                               controller.nameController.text.trim();
@@ -219,11 +238,17 @@ class edit_screen extends State<EditProfileScreen> {
 
                           setState(() => isLoading = true);
 
+                          // Check if user wants to update image or just name
+                          bool hasNewImage = controller.uploadedImage != null;
+
                           final user = await EditProfileService()
                               .EditProfileUser(
                                 firstName: firstName,
                                 lastName: lastName,
-                                profileimage: controller.uploadedImage!,
+                                profileimage:
+                                    hasNewImage
+                                        ? controller.uploadedImage!
+                                        : null,
                               );
 
                           setState(() => isLoading = false);
@@ -233,12 +258,10 @@ class edit_screen extends State<EditProfileScreen> {
                           if (user != null && user.status == 1) {
                             final prefs = await SharedPreferences.getInstance();
                             await prefs.setBool('isLoggedIn', true);
-
                             await prefs.setString(
                               'fullName',
                               "$firstName $lastName",
                             );
-
                             if (user.data?.userProfilePhoto != null &&
                                 user.data!.userProfilePhoto!.isNotEmpty) {
                               String url = user.data!.userProfilePhoto!;
@@ -247,8 +270,21 @@ class edit_screen extends State<EditProfileScreen> {
                                   url;
                               await prefs.setString('userProfilePhoto', url);
                             }
-
                             Navigator.pop(context);
+
+                            // Show success message
+                            String updateMessage =
+                                "Profile updated successfully";
+                            if (hasNewImage) {
+                              updateMessage =
+                                  "Profile picture and name updated successfully";
+                            } else {
+                              updateMessage = "Name updated successfully";
+                            }
+
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text(updateMessage)),
+                            );
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
