@@ -159,18 +159,18 @@ class edit_screen extends State<EditProfileScreen> {
                       ),
                     ),
                     SizedBox(height: 8),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Profile Picture (Optional)",
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontFamily: 'PlusJakartaSans',
-                          color: graycol,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    ),
+                    // Align(
+                    //   alignment: Alignment.centerLeft,
+                    //   child: Text(
+                    //     "Profile Picture (Optional)",
+                    //     style: TextStyle(
+                    //       fontSize: 12,
+                    //       fontFamily: 'PlusJakartaSans',
+                    //       color: graycol,
+                    //       fontWeight: FontWeight.w400,
+                    //     ),
+                    //   ),
+                    // ),
                     SizedBox(height: 12),
                     Align(
                       alignment: Alignment.centerLeft,
@@ -237,8 +237,6 @@ class edit_screen extends State<EditProfileScreen> {
                                   : "";
 
                           setState(() => isLoading = true);
-
-                          // Check if user wants to update image or just name
                           bool hasNewImage = controller.uploadedImage != null;
 
                           final user = await EditProfileService()
@@ -272,20 +270,21 @@ class edit_screen extends State<EditProfileScreen> {
                             }
                             Navigator.pop(context);
 
-                            // Show success message
-                            String updateMessage =
-                                "Profile updated successfully";
-                            if (hasNewImage) {
-                              updateMessage =
-                                  "Profile picture and name updated successfully";
-                            } else {
-                              updateMessage = "Name updated successfully";
-                            }
 
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text(updateMessage)),
-                            );
-                          } else {
+                          //   String updateM =
+                          //       "Profile updated successfully";
+                          //   if (hasNewImage) {
+                          //     updateMessage =
+                          //         "Profile picture and name updated successfully";
+                          //   } else {
+                          //     updateMessage = "Name updated successfully";
+                          //   }
+                          //
+                          //   ScaffoldMessenger.of(context).showSnackBar(
+                          //     SnackBar(content: Text(updateMessage)),
+                          //   );
+                          // } else {
+
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text(user?.msg ?? "Update failed"),

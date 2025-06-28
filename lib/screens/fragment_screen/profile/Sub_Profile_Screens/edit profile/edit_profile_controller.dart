@@ -33,12 +33,12 @@ class EditProfileController {
     if (!isValidName(nameController.text)) {
       return 'Enter first name followed by a space and last name, or just enter a space after the first name.';
     }
-    if (emailController.text.isEmpty) {
-      return 'Email is required';
-    }
-    if (emailController.text != email_) {
-      return 'Email didnt match with the email you loged in';
-    }
+    // if (emailController.text.isEmpty) {
+    //   return 'Email is required';
+    // }
+    // if (emailController.text != email_) {
+    //   return 'Email didnt match with the email you loged in';
+    // }
     // Image upload is now optional - removed the validation
     return null;
   }
