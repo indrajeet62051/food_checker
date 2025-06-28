@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:food_checker/core/Constrants/color.dart';
+import 'package:food_checker/screens/auth/forgot_password/forgot_pass_controller.dart';
 import 'package:food_checker/screens/widget/common_button.dart';
 import 'package:food_checker/screens/widget/text.dart';
 import 'package:food_checker/screens/widget/text_field.dart';
@@ -12,8 +13,29 @@ class ForgotPass extends StatefulWidget{
 }
 
 class forgotPassword extends State<ForgotPass>{
-  @override
 
+
+  late final ForgotPassController forgotPassController;
+
+  @override
+  void initState(){
+    super.initState();
+    forgotPassController = ForgotPassController();
+  }
+
+  @override
+  void dispose(){
+    forgotPassController.dispose();
+  }
+
+  @override
+  void clear(){
+    forgotPassController.clear();
+  }
+
+
+
+  @override
   Widget build(BuildContext context) {
     final screenWidth  = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -31,10 +53,12 @@ class forgotPassword extends State<ForgotPass>{
             Align(alignment: Alignment.centerLeft, child:
             commonText(text: "Email Address", txtSize: 14),),
             SizedBox(height: 8,),
-            commonTextField(hintText: "Enter Your Email Address",Svg_Path: 'assets/icons/Mail.svg'),
+            commonTextField(hintText: "Enter Your Email Address",Svg_Path: 'assets/icons/Mail.svg',controller: forgotPassController.emailController),
             SizedBox(height: 40,),
             SizedBox(height:60,width: 390,child:  
-            commonButton(text: "Request", txtSize: 18),),
+            commonButton(text: "Request", txtSize: 18,onPress: () {
+
+            },),),
             SizedBox(height: 40,),
             Row(children: [
               SizedBox(width: screenWidth*0.26,),

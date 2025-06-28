@@ -5,7 +5,7 @@ import 'package:food_checker/screens/auth/sign_up/sign_up_controller.dart';
 import 'package:food_checker/screens/widget/common_button.dart';
 import 'package:food_checker/screens/widget/text.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../../api/registation/registation_service.dart';
+import '../../../api/Services/registation_service.dart';
 import '../../../core/Constrants/color.dart';
 import '../../fragment_screen/fragment_screen.dart';
 import '../../widget/text_field.dart';
@@ -171,6 +171,8 @@ class Sign_up extends State<Signup> {
                                 final prefs = await SharedPreferences.getInstance();
                                 await prefs.setBool('isLoggedIn', true);
                                 await prefs.setString('fullName', user.data?.fullName ?? '');
+                                await prefs.setString('email', user.data?.email ?? '');
+                                await prefs.setString('auth_token', user.data?.authToken ?? '');
 
 
                                 if (!mounted) return;

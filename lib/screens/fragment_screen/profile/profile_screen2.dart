@@ -9,8 +9,8 @@ import 'package:food_checker/screens/widget/row.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'Sub_Profile_Screens/Language.dart';
-import 'Sub_Profile_Screens/change_password.dart';
-import 'Sub_Profile_Screens/edit_profile.dart';
+import 'Sub_Profile_Screens/change Password/change_password.dart';
+import 'Sub_Profile_Screens/edit profile/edit_profile.dart';
 import 'Sub_Profile_Screens/export.dart';
 import 'Sub_Profile_Screens/export2.dart';
 import 'Sub_Profile_Screens/subscription.dart';
@@ -24,20 +24,24 @@ class Profile_screen extends State<ProfileScreen2> {
   bool isSwitch = true;
 
 
-  String fullName_ = 'Loading...'; // default text
+  String fullName_ = 'Loading...';
+  String profilePicture_ ="";
 
   @override
   void initState() {
     super.initState();
-    _loadFullName();
+    _loaddata();
   }
 
-  Future<void> _loadFullName() async {
+  Future<void> _loaddata() async {
     final prefs = await SharedPreferences.getInstance();
     final fullname = prefs.getString('fullName') ?? '';
+    final profilePicture = prefs.getString('userProfilePhoto') ?? '';
     // final lastName = prefs.getString('lastName') ?? '';
+    print("Profile Image Path: $profilePicture");
     setState(() {
       fullName_ = '$fullname';
+      profilePicture_ = '$profilePicture';
     });
   }
 
@@ -50,11 +54,16 @@ class Profile_screen extends State<ProfileScreen2> {
       ProfileItem(
         imagePath: 'assets/icons/Edit_pencil.svg',
         rowText: 'Edit Profile',
-        onTap: () {
+        onTap: ()  {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => EditProfileScreen()),
-          );
+
+          ).then((_){
+            _loaddata();
+          });
+
+          
         },
       ),
       ProfileItem(
@@ -170,10 +179,12 @@ class Profile_screen extends State<ProfileScreen2> {
                       child: Center(
                         child: CircleAvatar(
                           radius: 56,
-                          backgroundImage: AssetImage(
-                            'assets/images/bydefault_user.jpg',
-                          ),
+                          backgroundImage: profilePicture_.isNotEmpty
+                              ? NetworkImage("https://codonnier.tech/flutterapp/food_hygine/app_images/profile_images/$profileImage_")
+                              : AssetImage('assets/images/bydefault_user.jpg') as ImageProvider,
                         ),
+
+
                       ),
                     ),
                     Positioned(

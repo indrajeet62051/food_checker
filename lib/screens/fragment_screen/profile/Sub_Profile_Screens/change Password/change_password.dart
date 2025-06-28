@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:food_checker/screens/widget/common_button.dart';
 import 'package:food_checker/screens/widget/text_field.dart';
 
-import '../../../../core/Constrants/color.dart';
-import '../../../widget/card.dart';
-import '../../../widget/text.dart';
-import 'edit_profile.dart';
+import '../../../../../core/Constrants/color.dart';
+import '../../../../widget/card.dart';
+import '../../../../widget/text.dart';
+import '../edit profile/edit_profile.dart';
 
 class Change_Password extends StatefulWidget{
   @override

@@ -8,9 +8,11 @@ Widget commonTextField({
   String? Svg_Path,
   TextEditingController? controller,
   String? Function(String?)? validator,
-  TextInputType? keyboardType
+  TextInputType? keyboardType,
+   bool ? readOnly,
 }) {
   return TextFormField(
+    readOnly: readOnly ?? false,
     controller: controller,
     keyboardType: keyboardType,
     validator: validator,
