@@ -1,5 +1,6 @@
 import 'package:food_checker/screens/fragment_screen/profile/Sub_Profile_Screens/edit%20profile/edit_profile.dart';
 
+import '../../screens/fragment_screen/profile/Sub_Profile_Screens/change Password/change_password.dart';
 import '../data_mode_post.dart';
 
 import 'dart:convert';
@@ -7,6 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 
 class ChangePassWordService{
+  // final auth = auth_Token_;
   final String baseUrl ="https://codonnier.tech/flutterapp/food_hygine/dev/Service.php?Service=changePassword&show_error=true";
 
 
@@ -26,7 +28,7 @@ class ChangePassWordService{
         'App-Os-Version':'iOS 11',
         'App-Store-Build-Number':'1.1',
         'App-Secret':'FoodHygine@2025',
-        'Auth-Token':'$auth_Token_'
+        'Auth-Token':'$auth_Token_C'
       },
         body: jsonEncode({
           'old_password' : OldPass,
@@ -38,11 +40,13 @@ class ChangePassWordService{
 
       if(responce.statusCode == 200){
         final jsonBody =  jsonDecode(responce.body);
+        // print(auth);
         if(jsonBody['status'] == 1){
 
           return User.fromJson(jsonBody);
         }else{
           debugPrint('Api Error : ${jsonBody['msg']}');
+          return User.fromJson(jsonBody);
         }
 
       }

@@ -19,10 +19,11 @@ class Change_Password extends StatefulWidget{
   State<StatefulWidget> createState() => change_password();
 }
 
+String auth_Token_C = "";
+
 
 class change_password extends State<Change_Password>{
   late final ChangePassController controller;
-  String auth_Token_ = "";
 
   bool isLoading = false;
 
@@ -42,7 +43,7 @@ class change_password extends State<Change_Password>{
     final pref = await SharedPreferences.getInstance();
     final auth_token = pref.getString('auth_token');
     setState((){
-      auth_Token_ = '$auth_token';
+      auth_Token_C = '$auth_token';
     });
 
 }
@@ -112,12 +113,14 @@ class change_password extends State<Change_Password>{
                     if(user !=null && user.status == 1){
                       final prefs = await SharedPreferences.getInstance();
                       await prefs.setString('new_token', user.data?.authToken?? "");
+                      print("New token: ${user.data?.authToken}");
+
 
                       Navigator.pop(context);
                     }else {
                       if (!mounted) return;
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text(user?.msg ?? "Change Failed")),
+                        SnackBar(content: Text(user?.msg ?? "Login Fail")),
                       );
                     }
 
