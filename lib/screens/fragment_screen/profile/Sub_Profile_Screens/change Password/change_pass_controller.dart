@@ -17,6 +17,9 @@ class ChangePassController{
     if (!passwordRegex.hasMatch(NewPassController.text)) {
       return "Password needs a capital, number, symbol, and be 6+ characters";
     }
+    if (NewPassController.text == CurrentPassController.text) {
+      return "New Password cant be same as Old Password.";
+    }
     if(ConfPassController.text.isEmpty){
       return 'Please Confirm the new Password ' ;
     }
