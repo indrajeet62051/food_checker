@@ -55,7 +55,7 @@ class Profile_screen extends State<ProfileScreen2> {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => EditProfileScreen()),
+            MaterialPageRoute(builder: (context) => EditProfileScreen(fullName : fullName_)),
           ).then((_) {
             _loaddata();
           });

@@ -4,18 +4,25 @@ import 'package:flutter_svg/svg.dart';
 import '../../core/Constrants/color.dart';
 
 Widget commonTextField({
-  required String hintText,
+  String ? hintText,
   String? Svg_Path,
   TextEditingController? controller,
   String? Function(String?)? validator,
   TextInputType? keyboardType,
    bool ? readOnly,
+  bool ? autofocus,
+  bool ? obsecure,
+
 }) {
-  return TextFormField(
+  return TextField(
+    obscureText: obsecure ?? false,
+    autofocus: autofocus ?? false,
+
     readOnly: readOnly ?? false,
+    // initialValue: InitialValue,
     controller: controller,
     keyboardType: keyboardType,
-    validator: validator,
+    // validator: validator,
     decoration: InputDecoration(
       hintText: hintText,
       hintStyle: TextStyle(color: graycol, fontWeight: FontWeight.w600, fontSize: 16),
@@ -32,7 +39,7 @@ Widget commonTextField({
           : null,
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: graycol),
+        borderSide: BorderSide(color: graycol.withOpacity(0.3),width: 1.5),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),

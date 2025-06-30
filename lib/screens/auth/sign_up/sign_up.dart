@@ -29,7 +29,6 @@ class Sign_up extends State<Signup> {
   void initState() {
     super.initState();
     registationController = RegisterController();
-    ;
   }
 
   @override
@@ -127,6 +126,7 @@ class Sign_up extends State<Signup> {
                       commonTextField(hintText: "Enter your Password",
                           Svg_Path: 'assets/icons/Lockcheck.svg',
                           controller: registationController.passwordController,
+                        obsecure: true
                       ), // Password
                       SizedBox(height: 12,),
                       Align(alignment: Alignment.centerLeft,
@@ -137,6 +137,7 @@ class Sign_up extends State<Signup> {
                               fontWeight: FontWeight.w500),)),
                       SizedBox(height: 8,),
                       commonTextField(hintText: "Re-enter Password",
+                          obsecure: true,
                           Svg_Path: 'assets/icons/Lockcheck.svg',
                           controller: registationController
                               .confirmPasswordController), // Conf Password

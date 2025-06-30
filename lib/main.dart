@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_checker/screens/OnBoardingScreen/into_screen.dart';
 import 'package:food_checker/screens/fragment_screen/fragment_screen.dart';
+import 'package:food_checker/screens/fragment_screen/profile/Sub_Profile_Screens/change%20Password/change_password.dart';
 import 'package:food_checker/screens/fragment_screen/profile/Sub_Profile_Screens/edit%20profile/edit_profile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -20,8 +21,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // debugShowCheckedModeBanner: false,
-      home: isLoggedIn ? FragmentScreen() : EditProfileScreen(),
+      debugShowCheckedModeBanner: false,
+      home: isLoggedIn ? FragmentScreen() : Change_Password(),
     );
   }
 }

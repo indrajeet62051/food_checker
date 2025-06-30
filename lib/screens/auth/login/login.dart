@@ -140,6 +140,7 @@ class Login extends State<Signin> {
                       ),
                       SizedBox(height: 8),
                       TextField(
+                        obscureText: true,
                         controller: loginController.passwordController,
                         decoration: InputDecoration(
                           hintText: "Enter your password",

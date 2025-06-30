@@ -12,15 +12,22 @@ import 'dart:io';
 import '../../../../../core/Constrants/color.dart';
 import '../../../../widget/card.dart';
 import '../../../../widget/text.dart';
+import '../../profile_screen2.dart';
 
 class EditProfileScreen extends StatefulWidget {
+  final String fullName;
+
+  EditProfileScreen({required this.fullName});
+
   @override
   State<StatefulWidget> createState() => edit_screen();
 }
 
+
 String email_ = "";
 String auth_Token_ = "";
 String profileImage_ = "";
+
 
 class edit_screen extends State<EditProfileScreen> {
   late final EditProfileController controller;
@@ -31,6 +38,7 @@ class edit_screen extends State<EditProfileScreen> {
     super.initState();
     controller = EditProfileController();
     _loaddata();
+
   }
 
   Future<void> _loaddata() async {
@@ -42,6 +50,7 @@ class edit_screen extends State<EditProfileScreen> {
       email_ = '$email';
       auth_Token_ = '$auth_token';
       profileImage_ = '$profileImage';
+      controller.nameController.text = widget.fullName;
     });
   }
 
@@ -186,7 +195,6 @@ class edit_screen extends State<EditProfileScreen> {
                     ),
                     SizedBox(height: 8),
                     commonTextField(
-                      hintText: "Enter Your Full Name",
                       Svg_Path: Assets.iconsUser,
                       controller: controller.nameController,
                     ), //Email id
@@ -215,7 +223,7 @@ class edit_screen extends State<EditProfileScreen> {
                       width: ScreenWight * 0.9069,
                       height: 60,
                       child: commonButton(
-                        text: "Update Profile",
+                        text: "Save Changes",
                         onPress: () async {
                           String fullName =
                               controller.nameController.text.trim();
@@ -271,19 +279,6 @@ class edit_screen extends State<EditProfileScreen> {
                             Navigator.pop(context);
 
 
-                          //   String updateM =
-                          //       "Profile updated successfully";
-                          //   if (hasNewImage) {
-                          //     updateMessage =
-                          //         "Profile picture and name updated successfully";
-                          //   } else {
-                          //     updateMessage = "Name updated successfully";
-                          //   }
-                          //
-                          //   ScaffoldMessenger.of(context).showSnackBar(
-                          //     SnackBar(content: Text(updateMessage)),
-                          //   );
-                          // } else {
 
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
